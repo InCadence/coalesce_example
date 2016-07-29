@@ -299,9 +299,6 @@ public class GDELT_Ingester {
 			System.out.println(
 					"Usage:  java -cp $CLASSPATH com.incadencecorp.coalesce.ingester.gdelt.GDELT_Ingester configfile datafile");
 		} else {
-			System.out.print("Press enter to continue");
-			System.in.read();
-			System.out.println();
 			GDELT_Ingester ingester = new GDELT_Ingester();
 			Properties props = new Properties();
 			props.load(new FileReader(new File(args[0])));
