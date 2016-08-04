@@ -35,6 +35,16 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class GDELT_Ingester {
+	
+	/**
+	 * @author Bryan Moore
+	 * July 2016
+	 * 
+	 * GDELT_Ingester is a command line utility that will read GDELT data from a CSV file and persist
+	 * that data as Coalesce Entities in a GeoMesa DataStore backed by Accumulo.
+	 * 
+	 * Data and documentation can be found at http://www.gdeltproject.org/data.html
+	 */
 
 	private static String NAME = "GDELT_DATA";
 	private static String SOURCE = "gdeltproject.org";
@@ -148,7 +158,6 @@ public class GDELT_Ingester {
 			((CoalesceCoordinateField) eventRecord.getFieldByName(prefix + "_Location"))
 					.setValue(factory.createPoint(coord));
 		} catch (CoalesceDataFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -236,7 +245,6 @@ public class GDELT_Ingester {
 			buildAndSetGeoField(eventRecord, "Actor1Geo");
 			buildAndSetGeoField(eventRecord, "Actor2Geo");
 			buildAndSetGeoField(eventRecord, "ActionGeo");
-
 		}
 		return entity;
 	}
@@ -272,7 +280,7 @@ public class GDELT_Ingester {
 					
 					entities.add(entity);
 					count++;
-					if (count % 2 == 0) {
+					if (count % 100 == 0) {
 						System.out.println();
 						System.out.print(count);
 						persistor.saveEntity(true, entities.toArray(new CoalesceEntity[entities.size()]));
@@ -280,7 +288,6 @@ public class GDELT_Ingester {
 					}
 					System.out.print(".");
 				} catch (CoalescePersistorException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
