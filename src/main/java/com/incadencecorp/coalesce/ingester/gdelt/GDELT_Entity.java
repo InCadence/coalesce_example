@@ -1,5 +1,6 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.incadencecorp.coalesce.common.exceptions.CoalesceDataFormatException;
@@ -15,29 +16,28 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceStringField;
 import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
 
 public class GDELT_Entity extends CoalesceEntity {
 
 	/**
-	 * @author Bryan Moore
-	 * July 2016
+	 * @author Bryan Moore July 2016
 	 * 
-	 * This class serves as a test object for persisting, retrieving, and searching JUnit tests.
+	 *         This class serves as a test object for persisting, retrieving, and searching JUnit tests.
 	 * 
-	 * GDELT_Test_Entity extends the CoalesceEntity object and fully defines the GDELT event schema.  
-	 * The fields DateTime, Actor1Geo_Location, Actor2Geo_Location, and ActionGeo_Location are not 
-	 * part of the GDELT schema but have been added to facilitate GeoMesa searching.
-	 *  
-	 * While all fields are defined here, only a few fields are populated for testing.
+	 *         GDELT_Test_Entity extends the CoalesceEntity object and fully defines the GDELT event schema. The fields
+	 *         DateTime, Actor1Geo_Location, Actor2Geo_Location, and ActionGeo_Location are not part of the GDELT schema
+	 *         but have been added to facilitate GeoMesa searching.
+	 * 
+	 *         While all fields are defined here, only a few fields are populated for testing.
 	 */
-	
+
 	private static String NAME = "GDELT_DATA";
 	private static String SOURCE = "gdeltproject.org";
 	private static String VERSION = "1.0";
 	private static String TITLE = "G2_Core_GDELT";
 	private static String SECTION = "Event_Section";
 	private static String RECORDSET = "Event_Recordset";
-	
 
 	public static String getRecordSetName() {
 		return NAME + "/" + SECTION + "/" + RECORDSET;
@@ -49,10 +49,10 @@ public class GDELT_Entity extends CoalesceEntity {
 
 	public GDELT_Entity() {
 		initialize();
-        setName(NAME);
-	    setSource(SOURCE);
-	    setVersion(VERSION);
-	    setTitle(TITLE);
+		setName(NAME);
+		setSource(SOURCE);
+		setVersion(VERSION);
+		setTitle(TITLE);
 		CoalesceSection eventSection = CoalesceSection.create(this, "Event_Section");
 		CoalesceRecordset eventRecordSet = CoalesceRecordset.create(eventSection, "Event_Recordset");
 		CoalesceFieldDefinition.create(eventRecordSet, "GlobalEventID", ECoalesceFieldDataTypes.INTEGER_TYPE);
@@ -123,31 +123,38 @@ public class GDELT_Entity extends CoalesceEntity {
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "ActionGeo_Location",
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
-		
+
 		CoalesceRecord eventRecord = eventRecordSet.addNew();
-	
+
 	}
-	
+
 	public static void setIntegerField(CoalesceRecord eventRecord, String name, String value) {
-		((CoalesceIntegerField) eventRecord.getFieldByName(name)).setValue(NumberUtils.toInt(value));
+		if (StringUtils.isNotBlank(value) && NumberUtils.isNumber(value)) {
+			((CoalesceIntegerField) eventRecord.getFieldByName(name)).setValue(NumberUtils.toInt(value));
+		}
 	}
 
 	public static void setStringField(CoalesceRecord eventRecord, String name, String value) {
-		((CoalesceStringField) eventRecord.getFieldByName(name)).setValue(value);
+		if (StringUtils.isNotBlank(value)) {
+			((CoalesceStringField) eventRecord.getFieldByName(name)).setValue(value);
+		}
 	}
 
 	public static void setFloatField(CoalesceRecord eventRecord, String name, String value) {
-		((CoalesceFloatField) eventRecord.getFieldByName(name)).setValue(NumberUtils.toFloat(value));
+		if (StringUtils.isNotBlank(value)) {
+			((CoalesceFloatField) eventRecord.getFieldByName(name)).setValue(NumberUtils.toFloat(value));
+		}
 	}
-	
+
 	public static void buildAndSetGeoField(CoalesceRecord eventRecord, String prefix) {
 		GeometryFactory factory = new GeometryFactory();
 		try {
-			Coordinate coord = new Coordinate(
-					((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Long")).getValue(),
-					((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Lat")).getValue());
-			((CoalesceCoordinateField) eventRecord.getFieldByName(prefix + "_Location"))
-					.setValue(factory.createPoint(coord));
+			Float lon = ((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Long")).getValue();
+			Float lat = ((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Lat")).getValue();
+			if (lat != 0 || lon != 0) {
+				Point point = factory.createPoint(new Coordinate(lon, lat));
+				((CoalesceCoordinateField) eventRecord.getFieldByName(prefix + "_Location")).setValue(point);
+			}
 		} catch (CoalesceDataFormatException e) {
 			e.printStackTrace();
 		}
