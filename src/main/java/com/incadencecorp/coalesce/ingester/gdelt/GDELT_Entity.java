@@ -151,7 +151,7 @@ public class GDELT_Entity extends CoalesceEntity {
 		try {
 			Float lon = ((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Long")).getValue();
 			Float lat = ((CoalesceFloatField) eventRecord.getFieldByName(prefix + "_Lat")).getValue();
-			if (lat != 0 || lon != 0) {
+			if (lat != null && lon != null && (lat != 0 || lon != 0)) {
 				Point point = factory.createPoint(new Coordinate(lon, lat));
 				((CoalesceCoordinateField) eventRecord.getFieldByName(prefix + "_Location")).setValue(point);
 			}
