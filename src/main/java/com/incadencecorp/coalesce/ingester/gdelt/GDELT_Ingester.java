@@ -13,21 +13,17 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.joda.time.DateTime;
 import org.xml.sax.SAXException;
 
-import com.incadencecorp.coalesce.common.exceptions.CoalesceDataFormatException;
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
 import com.incadencecorp.coalesce.framework.CoalesceFramework;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceCoordinateField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceDateTimeField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceFloatField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.persistance.ICoalescePersistor;
 import com.incadencecorp.coalesce.framework.persistance.ServerConn;
 import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloPersistor;
-import com.vividsolutions.jts.geom.Coordinate;
 
 public class GDELT_Ingester {
 	
@@ -41,8 +37,8 @@ public class GDELT_Ingester {
 	 * Data and documentation can be found at http://www.gdeltproject.org/data.html
 	 */
 
-	private CoalesceEntity createEntityFromLine(String gdeltLine) {
-		CoalesceEntity entity = new GDELT_Entity();
+	private GDELT_Entity createEntityFromLine(String gdeltLine) {
+		GDELT_Entity entity = new GDELT_Entity();
 
 		CoalesceRecordset eventRecordSet = entity
 				.getCoalesceRecordsetForNamePath("GDELT_DATA/Event_Section/Event_Recordset");
@@ -143,29 +139,31 @@ public class GDELT_Ingester {
 			throws IOException, SAXException, CoalescePersistorException {
 		CoalesceFramework coalesceFramework = new CoalesceFramework();
 		coalesceFramework.initialize(persistor);
-		boolean firstEntity = true;
 		int count = 0;
+		boolean firstEntity = true;
 		List<CoalesceEntity> entities = new ArrayList<>();
 		try (BufferedReader fr = new BufferedReader(new FileReader(file))) {
 			String line;
+			long beginTime = System.currentTimeMillis();
 			while ((line = fr.readLine()) != null) {
 				try {
-					CoalesceEntity entity = createEntityFromLine(line);
-					
+					GDELT_Entity entity = createEntityFromLine(line);
 					if (firstEntity) {
-						coalesceFramework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
+						CoalesceFramework framework = new CoalesceFramework();
+						framework.initialize(persistor);
+						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
+						CoalesceObjectFactory.register(GDELT_Entity.class);
 						firstEntity = false;
 					}
-					
 					entities.add(entity);
 					count++;
 					if (count % 100 == 0) {
-						System.out.println();
-						System.out.print(count);
+						long elapsedTime = System.currentTimeMillis() - beginTime;
+						double rate = (double)count / (double)elapsedTime * 1000d;
+						System.out.println(String.format("%d  @ rate of %f per second.   Current ms: %d", count,rate,System.currentTimeMillis()));
 						persistor.saveEntity(true, entities.toArray(new CoalesceEntity[entities.size()]));
 						entities.clear();
 					}
-					System.out.print(".");
 				} catch (CoalescePersistorException e) {
 					e.printStackTrace();
 				}
@@ -174,7 +172,6 @@ public class GDELT_Ingester {
 				persistor.saveEntity(true, entities.toArray(new CoalesceEntity[entities.size()]));
 				count += entities.size();
 			}
-			System.out.println();
 		}
 		return count;
 	}
@@ -194,10 +191,6 @@ public class GDELT_Ingester {
 			String password = props.getProperty("password");
 			ServerConn conn = new ServerConn.Builder().db(dbName).serverName(zookeepers).user(user).password(password).build();
 			AccumuloPersistor persistor = new AccumuloPersistor(conn);
-			CoalesceFramework framework = new CoalesceFramework();
-			framework.initialize(persistor);
-			framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(new GDELT_Entity()));
-			CoalesceObjectFactory.register(GDELT_Entity.class);
 			int count = ingester.persistRecordsFromFile(persistor, inputFile);
 			System.out.println("Persisted " + count + " records");
 			persistor.close();
