@@ -138,7 +138,7 @@ public class GDELT_Ingester {
 	public int persistRecordsFromFile(ICoalescePersistor persistor, File file)
 			throws IOException, SAXException, CoalescePersistorException {
 		CoalesceFramework coalesceFramework = new CoalesceFramework();
-		coalesceFramework.initialize(persistor);
+		coalesceFramework.setAuthoritativePersistor(persistor);
 		int count = 0;
 		boolean firstEntity = true;
 		List<CoalesceEntity> entities = new ArrayList<>();
@@ -150,8 +150,9 @@ public class GDELT_Ingester {
 					GDELT_Entity entity = createEntityFromLine(line);
 					if (firstEntity) {
 						CoalesceFramework framework = new CoalesceFramework();
-						framework.initialize(persistor);
+						framework.setAuthoritativePersistor(persistor);
 						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
+						framework.close();
 						CoalesceObjectFactory.register(GDELT_Entity.class);
 						firstEntity = false;
 					}
@@ -173,6 +174,7 @@ public class GDELT_Ingester {
 				count += entities.size();
 			}
 		}
+		coalesceFramework.close();
 		return count;
 	}
 
