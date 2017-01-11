@@ -123,6 +123,49 @@ public class GDELT_Ingester {
 		}
 		return entity;
 	}
+	
+	private GDELT_Actor createActorFromLine(String gdeltLine) {
+		GDELT_Actor actor = new GDELT_Actor();
+
+		CoalesceRecordset eventRecordSet = actor
+				.getCoalesceRecordsetForNamePath("GDELT_DATA/Actor_Section/Actor_Recordset");
+		CoalesceRecord actorRecord = eventRecordSet.addNew();
+		String[] fields = gdeltLine.split("\t");
+
+		GDELT_Entity.setStringField(actorRecord, "Actor1Code", fields[5]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Name", fields[6]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1CountryCode", fields[7]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1KnownGroupCode", fields[8]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1EthnicCode", fields[9]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Religion1Code", fields[10]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Religion2Code", fields[11]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Type1Code", fields[12]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Type2Code", fields[13]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Type3Code", fields[14]);
+
+		
+		GDELT_Entity.setIntegerField(actorRecord, "Actor1Geo_Type", fields[35]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_Fullname", fields[36]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_CountryCode", fields[37]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_ADM1Code", fields[38]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_ADM2Code", fields[39]);
+		GDELT_Entity.setFloatField(actorRecord, "Actor1Geo_Lat", fields[40]);
+		GDELT_Entity.setFloatField(actorRecord, "Actor1Geo_Long", fields[41]);
+		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_FeatureID", fields[42]);
+
+		int year = NumberUtils.toInt(fields[59].substring(0, 4));
+		int month = NumberUtils.toInt(fields[59].substring(4, 6));
+		int day = NumberUtils.toInt(fields[59].substring(6, 8));
+		int hour = NumberUtils.toInt(fields[59].substring(8, 10));
+		int min = NumberUtils.toInt(fields[59].substring(10, 12));
+		int sec = NumberUtils.toInt(fields[59].substring(12, 14));
+		DateTime dt = new DateTime(year, month, day, hour, min, sec);
+		((CoalesceDateTimeField) actorRecord.getFieldByName("DateTime")).setValue(dt);
+
+		GDELT_Entity.buildAndSetGeoField(actorRecord, "Actor1Geo");
+			
+		return actor;
+	}
 
 	public List<CoalesceEntity> loadRecordsFromFile(File file) throws IOException {
 		List<CoalesceEntity> entities = new ArrayList<>();
@@ -147,12 +190,12 @@ public class GDELT_Ingester {
 			long beginTime = System.currentTimeMillis();
 			while ((line = fr.readLine()) != null) {
 				try {
-					GDELT_Entity entity = createEntityFromLine(line);
+					GDELT_Actor entity = createActorFromLine(line);
 					if (firstEntity) {
 						CoalesceFramework framework = new CoalesceFramework();
 						framework.initialize(persistor);
 						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
-						CoalesceObjectFactory.register(GDELT_Entity.class);
+						CoalesceObjectFactory.register(GDELT_Actor.class);
 						firstEntity = false;
 					}
 					entities.add(entity);
@@ -184,11 +227,11 @@ public class GDELT_Ingester {
 			GDELT_Ingester ingester = new GDELT_Ingester();
 			Properties props = new Properties();
 			props.load(new FileReader(new File(args[0])));
-			File inputFile = new File(args[1]);
-			String dbName = props.getProperty("database");
-			String zookeepers = props.getProperty("zookeepers");
-			String user = props.getProperty("userid");
-			String password = props.getProperty("password");
+			File inputFile = new File(args[1]);			
+			String dbName = "bdp";
+			String zookeepers = "10.10.10.74";
+			String user = "root";
+			String password = "accumulo";
 			ServerConn conn = new ServerConn.Builder().db(dbName).serverName(zookeepers).user(user).password(password).build();
 			AccumuloPersistor persistor = new AccumuloPersistor(conn);
 			int count = ingester.persistRecordsFromFile(persistor, inputFile);
