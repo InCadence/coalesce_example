@@ -26,26 +26,10 @@ public class GDELT_Event extends GDELT_Entity {
 		CoalesceFieldDefinition.create(eventRecordSet, "MonthYear", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "Year", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "FractionDate", ECoalesceFieldDataTypes.FLOAT_TYPE);
+		
 		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Name", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1KnownGroupCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1EthnicCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Religion1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Religion2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Type1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Type2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Type3Code", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Name", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2KnownGroupCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2EthnicCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Religion1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Religion2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Type1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Type2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Type3Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		
 		CoalesceFieldDefinition.create(eventRecordSet, "IsRootEvent", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "EventCode", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "EventBaseCode", ECoalesceFieldDataTypes.STRING_TYPE);
@@ -56,22 +40,7 @@ public class GDELT_Event extends GDELT_Entity {
 		CoalesceFieldDefinition.create(eventRecordSet, "NumSources", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "NumArticles", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "AvgTone", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_Type", ECoalesceFieldDataTypes.INTEGER_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_Fullname", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_ADM1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_ADM2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_Lat", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_Long", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_FeatureID", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_Type", ECoalesceFieldDataTypes.INTEGER_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_Fullname", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_ADM1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_ADM2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_Lat", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_Long", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_FeatureID", ECoalesceFieldDataTypes.STRING_TYPE);
+
 		CoalesceFieldDefinition.create(eventRecordSet, "ActionGeo_Type", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "ActionGeo_Fullname", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "ActionGeo_CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
@@ -83,10 +52,13 @@ public class GDELT_Event extends GDELT_Entity {
 		CoalesceFieldDefinition.create(eventRecordSet, "DATEADDED", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "SOURCEURL", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "DateTime", ECoalesceFieldDataTypes.DATE_TIME_TYPE);
+		
+		//Keep to remember where each actor was during the event?
 		CoalesceFieldDefinition.create(eventRecordSet, "Actor1Geo_Location",
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 		CoalesceFieldDefinition.create(eventRecordSet, "Actor2Geo_Location",
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
+		
 		CoalesceFieldDefinition.create(eventRecordSet, "ActionGeo_Location",
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 
