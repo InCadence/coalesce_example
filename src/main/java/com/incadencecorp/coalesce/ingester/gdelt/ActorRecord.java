@@ -17,30 +17,29 @@ public class ActorRecord extends OERecord {
 
 	}
 
-	public static CoalesceRecordset createRecordSet(CoalesceSection section, String pathName) {
+	public static CoalesceRecordset createRecordset(CoalesceSection section, String pathName) {
 		CoalesceRecordset recordSet = CoalesceRecordset.create(section, pathName);
 		
-		CoalesceFieldDefinition.create(recordSet, "Actor1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Name", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1KnownGroupCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1EthnicCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Religion1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Religion2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Type1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Type2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Type3Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorCode", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorName", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "NameMetaphone", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorCountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorKnownGroupCode", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorEthnicCode", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorReligion1Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorReligion2Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorType1Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorType2Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorType3Code", ECoalesceFieldDataTypes.STRING_TYPE);
 		
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_Type", ECoalesceFieldDataTypes.INTEGER_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_Fullname", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_CountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_ADM1Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_ADM2Code", ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_Lat", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_Long", ECoalesceFieldDataTypes.FLOAT_TYPE);
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_FeatureID", ECoalesceFieldDataTypes.STRING_TYPE);
-
-		CoalesceFieldDefinition.create(recordSet, "Actor1Geo_Location",
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoType", ECoalesceFieldDataTypes.INTEGER_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoFullname", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoCountryCode", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoADM1Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoADM2Code", ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoFeatureID", ECoalesceFieldDataTypes.STRING_TYPE);
+		
+		CoalesceFieldDefinition.create(recordSet, "ActorGeoLocation",
 				ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 		
 		return recordSet;

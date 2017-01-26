@@ -32,6 +32,7 @@ import org.apache.accumulo.core.data.Key;
 import org.apache.accumulo.core.data.Range;
 import org.apache.accumulo.core.data.Value;
 import org.apache.accumulo.core.security.Authorizations;
+import org.apache.hadoop.io.Text;
 
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
 import com.incadencecorp.coalesce.framework.persistance.ServerConn;
@@ -48,10 +49,10 @@ public class ReadData {
       System.exit(1);
     }
     
-    String dbName = "bdp";
-	String zookeepers = "10.10.10.74";
-	String user = "root";
-	String password = "accumulo";
+    String dbName = args[0];
+	String zookeepers = args[1];
+	String user = args[2];
+	String password = args[3];
 	ServerConn serverConnection = new ServerConn.Builder().db(dbName).serverName(zookeepers).user(user).password(password).build();
 	AccumuloDataConnector accumuloDataConnector;
 	try {
@@ -69,14 +70,12 @@ public class ReadData {
 		
 		while(iter.hasNext())
 		{
-			/*
 			Entry<Key,Value> e = iter.next();
 			Text colf = e.getKey().getColumnFamily();
 			Text colq = e.getKey().getColumnQualifier();
 			System.out.println("row: " + e.getKey().getRow() + "\ncolf: " + colf + "\ncolq: " + colq);
 			System.out.println("OTHER STUFF "+e.getKey().toString());
 			System.out.println("value: " + e.getValue().getClass().getName() + "\n" + e.getValue().toString()+"\n\n");
-			*/
 		}
     
 	    /*String instanceName = args[0];

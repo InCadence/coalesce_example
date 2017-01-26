@@ -5,261 +5,69 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.codec.language.DoubleMetaphone;
+import org.apache.commons.codec.language.Metaphone;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.xml.sax.SAXException;
 
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
+import com.incadencecorp.coalesce.common.helpers.EntityLinkHelper;
 import com.incadencecorp.coalesce.framework.CoalesceFramework;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceDateTimeField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceFieldDefinition;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceLinkage;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
+import com.incadencecorp.coalesce.framework.datamodel.ELinkTypes;
 import com.incadencecorp.coalesce.framework.persistance.ICoalescePersistor;
 import com.incadencecorp.coalesce.framework.persistance.ServerConn;
+import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloDataConnectorIT;
 import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloPersistor;
 
 public class GDELT_Ingester {
-	
-	/**
-	 * @author Bryan Moore
-	 * July 2016
-	 * 
-	 * GDELT_Ingester is a command line utility that will read GDELT data from a CSV file and persist
-	 * that data as Coalesce Entities in a GeoMesa DataStore backed by Accumulo.
-	 * 
-	 * Data and documentation can be found at http://www.gdeltproject.org/data.html
-	 */
-
-	/**
-	 * Method to create Entities from version 1.X GDELT data
-	 * @param gdeltLine
-	 * @return GDELT_Entity created from the ingest
-	 */
-	private GDELT_Entity createV1EntityFromLine(String gdeltLine) {
-		GDELT_Entity entity = new GDELT_Entity();
-		GDELT_Actor actor = new GDELT_Actor();
-
-		CoalesceRecordset eventRecordSet = entity
-				.getCoalesceRecordsetForNamePath("GDELT_DATA/Event_Section/Event_Recordset");
-		CoalesceRecord eventRecord = eventRecordSet.addNew();
-		String[] fields = gdeltLine.split("\t");
-		if (fields.length == 58) {
-			GDELT_Entity.setIntegerField(eventRecord, "GlobalEventID", fields[0]);
-			GDELT_Entity.setIntegerField(eventRecord, "Day", fields[1]);
-			GDELT_Entity.setIntegerField(eventRecord, "MonthYear", fields[2]);
-			GDELT_Entity.setIntegerField(eventRecord, "Year", fields[3]);
-			GDELT_Entity.setFloatField(eventRecord, "FractionDate", fields[4]);
-			
-			GDELT_Entity.setStringField(eventRecord, "Actor1Code", fields[5]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Name", fields[6]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1CountryCode", fields[7]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1KnownGroupCode", fields[8]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1EthnicCode", fields[9]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Religion1Code", fields[10]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Religion2Code", fields[11]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type1Code", fields[12]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type2Code", fields[13]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type3Code", fields[14]);
-
-			GDELT_Entity.setStringField(eventRecord, "Actor2Code", fields[15]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Name", fields[16]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2CountryCode", fields[17]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2KnownGroupCode", fields[18]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2EthnicCode", fields[19]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Religion1Code", fields[20]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Religion2Code", fields[21]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type1Code", fields[22]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type2Code", fields[23]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type3Code", fields[24]);
-			
-			GDELT_Entity.setIntegerField(eventRecord, "IsRootEvent", fields[25]);
-			GDELT_Entity.setStringField(eventRecord, "EventCode", fields[26]);
-			GDELT_Entity.setStringField(eventRecord, "EventBaseCode", fields[27]);
-			GDELT_Entity.setStringField(eventRecord, "EventRootCode", fields[28]);
-			GDELT_Entity.setIntegerField(eventRecord, "QuadClass", fields[29]);
-			GDELT_Entity.setFloatField(eventRecord, "GoldsteinScale", fields[30]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumMentions", fields[30]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumSources", fields[31]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumArticles", fields[32]);
-			GDELT_Entity.setFloatField(eventRecord, "AvgTone", fields[34]);
-			
-			GDELT_Entity.setIntegerField(eventRecord, "Actor1Geo_Type", fields[35]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_Fullname", fields[36]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_CountryCode", fields[37]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_ADM1Code", fields[38]);
-			
-			//DELETE THIS
-			//GDELT_Entity.setStringField(eventRecord, "Actor1Geo_ADM2Code", fields[39]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "Actor1Geo_Lat", fields[39]);
-			GDELT_Entity.setFloatField(eventRecord, "Actor1Geo_Long", fields[40]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_FeatureID", fields[41]);
-			GDELT_Entity.setIntegerField(eventRecord, "Actor2Geo_Type", fields[42]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_Fullname", fields[43]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_CountryCode", fields[44]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_ADM1Code", fields[45]);
-			
-			//DELETE THIS
-			//GDELT_Entity.setStringField(eventRecord, "Actor2Geo_ADM2Code", fields[47]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "Actor2Geo_Lat", fields[46]);
-			GDELT_Entity.setFloatField(eventRecord, "Actor2Geo_Long", fields[47]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_FeatureID", fields[48]);
-			GDELT_Entity.setIntegerField(eventRecord, "ActionGeo_Type", fields[49]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_Fullname", fields[50]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_CountryCode", fields[51]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_ADM1Code", fields[52]);
-			
-			//DELETE THIS
-			//GDELT_Entity.setStringField(eventRecord, "ActionGeo_ADM2Code", fields[55]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "ActionGeo_Lat", fields[53]);
-			GDELT_Entity.setFloatField(eventRecord, "ActionGeo_Long", fields[54]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_FeatureID", fields[55]);
-			GDELT_Entity.setIntegerField(eventRecord, "DATEADDED", fields[56]);
-			GDELT_Entity.setStringField(eventRecord, "SOURCEURL", fields[57]);
-
-			int year = NumberUtils.toInt(fields[56].substring(0, 4));
-			int month = NumberUtils.toInt(fields[56].substring(4, 6));
-			int day = NumberUtils.toInt(fields[56].substring(6, 8));
-			int hour = 0;
-			int min = 0;
-			int sec = 0;
-			DateTime dt = new DateTime(year, month, day, hour, min, sec);
-			((CoalesceDateTimeField) eventRecord.getFieldByName("DateTime")).setValue(dt);
-
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "Actor1Geo");
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "Actor2Geo");
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "ActionGeo");
-			
-			//Actor section
-			CoalesceRecord actorRecord = eventRecordSet.addNew();
-
-			GDELT_Actor.setStringField(actorRecord, "Actor1Code", fields[5]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Name", fields[6]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1CountryCode", fields[7]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1KnownGroupCode", fields[8]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1EthnicCode", fields[9]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Religion1Code", fields[10]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Religion2Code", fields[11]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type1Code", fields[12]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type2Code", fields[13]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type3Code", fields[14]);
-
-			
-			GDELT_Actor.setIntegerField(actorRecord, "Actor1Geo_Type", fields[35]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_Fullname", fields[36]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_CountryCode", fields[37]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_ADM1Code", fields[38]);
-			GDELT_Actor.setFloatField(actorRecord, "Actor1Geo_Lat", fields[39]);
-			GDELT_Actor.setFloatField(actorRecord, "Actor1Geo_Long", fields[40]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_FeatureID", fields[41]);
-
-			((CoalesceDateTimeField) actorRecord.getFieldByName("DateTime")).setValue(dt);
-
-			GDELT_Actor.buildAndSetGeoField(actorRecord, "Actor1Geo");
-			
-			//Event section
-			GDELT_Event event = new GDELT_Event();
-
-			CoalesceRecord eventSpecificRecord = eventRecordSet.addNew();
-			
-		}
-		return entity;
-	}
 	
 	/**
 	 * Method to create Entities from version 2.X GDELT data
 	 * @param gdeltLine
 	 * @return GDELT_Entity created from the ingest
 	 */
-	private GDELT_Entity createV2EntityFromLine(String gdeltLine) {
-		GDELT_Entity entity = new GDELT_Entity();
-		GDELT_Actor actor = new GDELT_Actor();
+	private List<OEEntity> createV2EntitiesFromLine(String gdeltLine, String sourceFile) {
+		String source = "GDELT";
+		
+		List<OEEntity> entities = new ArrayList<>();
+		
+		GDELTArtifact artifact = new GDELTArtifact();
+		artifact.setSource(source);
+		CoalesceRecordset gdelt_artifactRecordSet = artifact
+				.getCoalesceRecordsetForNamePath("OEEntity/GDELTArtifactSection/GDELTArtifactRecordset");
+		CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.addNew();
 
-		CoalesceRecordset eventRecordSet = entity
-				.getCoalesceRecordsetForNamePath("GDELT_DATA/Event_Section/Event_Recordset");
-		CoalesceRecord eventRecord = eventRecordSet.addNew();
+		CoalesceRecordset artifactRecordSet = artifact
+				.getCoalesceRecordsetForNamePath("OEEntity/ArtifactSection/ArtifactRecordset");
+		CoalesceRecord artifactRecord = artifactRecordSet.addNew();
+		
+		entities.add(artifact);
+		
 		String[] fields = gdeltLine.split("\t");
 		if (fields.length == 61) {
-			GDELT_Entity.setIntegerField(eventRecord, "GlobalEventID", fields[0]);
-			GDELT_Entity.setIntegerField(eventRecord, "Day", fields[1]);
-			GDELT_Entity.setIntegerField(eventRecord, "MonthYear", fields[2]);
-			GDELT_Entity.setIntegerField(eventRecord, "Year", fields[3]);
-			GDELT_Entity.setFloatField(eventRecord, "FractionDate", fields[4]);
 			
-			GDELT_Entity.setStringField(eventRecord, "Actor1Code", fields[5]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Name", fields[6]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1CountryCode", fields[7]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1KnownGroupCode", fields[8]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1EthnicCode", fields[9]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Religion1Code", fields[10]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Religion2Code", fields[11]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type1Code", fields[12]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type2Code", fields[13]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Type3Code", fields[14]);
-
-			GDELT_Entity.setStringField(eventRecord, "Actor2Code", fields[15]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Name", fields[16]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2CountryCode", fields[17]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2KnownGroupCode", fields[18]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2EthnicCode", fields[19]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Religion1Code", fields[20]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Religion2Code", fields[21]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type1Code", fields[22]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type2Code", fields[23]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Type3Code", fields[24]);
-			
-			GDELT_Entity.setIntegerField(eventRecord, "IsRootEvent", fields[25]);
-			GDELT_Entity.setStringField(eventRecord, "EventCode", fields[26]);
-			GDELT_Entity.setStringField(eventRecord, "EventBaseCode", fields[27]);
-			GDELT_Entity.setStringField(eventRecord, "EventRootCode", fields[28]);
-			GDELT_Entity.setIntegerField(eventRecord, "QuadClass", fields[29]);
-			GDELT_Entity.setFloatField(eventRecord, "GoldsteinScale", fields[30]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumMentions", fields[30]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumSources", fields[31]);
-			GDELT_Entity.setIntegerField(eventRecord, "NumArticles", fields[32]);
-			GDELT_Entity.setFloatField(eventRecord, "AvgTone", fields[34]);
-			
-			GDELT_Entity.setIntegerField(eventRecord, "Actor1Geo_Type", fields[35]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_Fullname", fields[36]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_CountryCode", fields[37]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_ADM1Code", fields[38]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_ADM2Code", fields[39]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "Actor1Geo_Lat", fields[40]);
-			GDELT_Entity.setFloatField(eventRecord, "Actor1Geo_Long", fields[41]);
-			GDELT_Entity.setStringField(eventRecord, "Actor1Geo_FeatureID", fields[42]);
-			GDELT_Entity.setIntegerField(eventRecord, "Actor2Geo_Type", fields[43]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_Fullname", fields[44]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_CountryCode", fields[45]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_ADM1Code", fields[46]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_ADM2Code", fields[47]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "Actor2Geo_Lat", fields[48]);
-			GDELT_Entity.setFloatField(eventRecord, "Actor2Geo_Long", fields[49]);
-			GDELT_Entity.setStringField(eventRecord, "Actor2Geo_FeatureID", fields[50]);
-			GDELT_Entity.setIntegerField(eventRecord, "ActionGeo_Type", fields[51]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_Fullname", fields[52]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_CountryCode", fields[53]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_ADM1Code", fields[54]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_ADM2Code", fields[55]);
-			
-			GDELT_Entity.setFloatField(eventRecord, "ActionGeo_Lat", fields[56]);
-			GDELT_Entity.setFloatField(eventRecord, "ActionGeo_Long", fields[57]);
-			GDELT_Entity.setStringField(eventRecord, "ActionGeo_FeatureID", fields[58]);
-			GDELT_Entity.setIntegerField(eventRecord, "DATEADDED", fields[59]);
-			GDELT_Entity.setStringField(eventRecord, "SOURCEURL", fields[60]);
-
+			//Generate the DateTime before we start
 			int year = NumberUtils.toInt(fields[59].substring(0, 4));
 			int month = NumberUtils.toInt(fields[59].substring(4, 6));
 			int day = NumberUtils.toInt(fields[59].substring(6, 8));
@@ -267,89 +75,174 @@ public class GDELT_Ingester {
             int min = NumberUtils.toInt(fields[59].substring(10, 12));
             int sec = NumberUtils.toInt(fields[59].substring(12, 14));
 			DateTime dt = new DateTime(year, month, day, hour, min, sec);
-			((CoalesceDateTimeField) eventRecord.getFieldByName("DateTime")).setValue(dt);
-
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "Actor1Geo");
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "Actor2Geo");
-			GDELT_Entity.buildAndSetGeoField(eventRecord, "ActionGeo");
 			
-			//Actor section
-			CoalesceRecord actorRecord = eventRecordSet.addNew();
-
-			GDELT_Actor.setStringField(actorRecord, "Actor1Code", fields[5]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Name", fields[6]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1CountryCode", fields[7]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1KnownGroupCode", fields[8]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1EthnicCode", fields[9]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Religion1Code", fields[10]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Religion2Code", fields[11]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type1Code", fields[12]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type2Code", fields[13]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Type3Code", fields[14]);
+			//Populate the Artifact with the raw data and metadata
+			GDELTArtifact.setStringField(gdelt_artifactRecord, "SourceFileName", sourceFile);
+			GDELTArtifact.setIntegerField(gdelt_artifactRecord, "GlobalEventID", fields[0]);
+			GDELTArtifact.setStringField(gdelt_artifactRecord, "RawText", StringEscapeUtils.escapeJava(gdeltLine));
+			
+			((CoalesceDateTimeField) artifactRecord.getFieldByName("DateIngested")).setValue(DateTime.now());
+			DateTime artifactDate = new DateTime(Integer.parseInt(sourceFile.substring(0, 4)),
+											Integer.parseInt(sourceFile.substring(4, 6)),
+											Integer.parseInt(sourceFile.substring(6, 8)), 0, 0);
+			((CoalesceDateTimeField) artifactRecord.getFieldByName("ArtifactDate")).setValue(artifactDate);
+			
+			//Generate an MD5 Sum for the data chunk
+			try {
+				MessageDigest m = MessageDigest.getInstance("MD5");
+				m.update(gdeltLine.getBytes());
+				byte[] digest = m.digest();
+				BigInteger bigInt = new BigInteger(1,digest);
+				String hashText = bigInt.toString(16); // We need to zero pad it to get the full 32 chars.
+				while(hashText.length() < 32 ){
+					hashText = "0"+hashText;
+				}
+				OEEntity.setStringField(artifactRecord, "Md5Sum", hashText);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
+			//Actor1 section
+			OEActor actor1 = new OEActor();
+			actor1.setSource(source);
+			CoalesceRecordset actor1RecordSet = actor1
+					.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
+			CoalesceRecord actor1Record = actor1RecordSet.addNew();
+			CoalesceRecordset actor1OERecordSet = actor1.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
+			CoalesceRecord actor1OERecord = actor1OERecordSet.addNew();
+			
+			OEActor.setBooleanField(actor1OERecord, "IsSimulation", false);
+			OEActor.setStringField(actor1OERecord, "DataSource", "GDELT");
+			OEActor.setStringField(actor1OERecord, "OntologyReference", "Actor");
+			
+			OEActor.setStringField(actor1Record, "ActorCode", fields[5]);
+			OEActor.setStringField(actor1Record, "ActorName", fields[6]);
+			OEActor.setStringField(actor1Record, "ActorCountryCode", fields[7]);
+			OEActor.setStringField(actor1Record, "ActorKnownGroupCode", fields[8]);
+			OEActor.setStringField(actor1Record, "ActorEthnicCode", fields[9]);
+			OEActor.setStringField(actor1Record, "ActorReligion1Code", fields[10]);
+			OEActor.setStringField(actor1Record, "ActorReligion2Code", fields[11]);
+			OEActor.setStringField(actor1Record, "ActorType1Code", fields[12]);
+			OEActor.setStringField(actor1Record, "ActorType2Code", fields[13]);
+			OEActor.setStringField(actor1Record, "ActorType3Code", fields[14]);
 
 			
-			GDELT_Actor.setIntegerField(actorRecord, "Actor1Geo_Type", fields[35]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_Fullname", fields[36]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_CountryCode", fields[37]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_ADM1Code", fields[38]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_ADM2Code", fields[39]);
-			GDELT_Actor.setFloatField(actorRecord, "Actor1Geo_Lat", fields[40]);
-			GDELT_Actor.setFloatField(actorRecord, "Actor1Geo_Long", fields[41]);
-			GDELT_Actor.setStringField(actorRecord, "Actor1Geo_FeatureID", fields[42]);
+			OEActor.setIntegerField(actor1Record, "ActorGeoType", fields[35]);
+			OEActor.setStringField(actor1Record, "ActorGeoFullname", fields[36]);
+			OEActor.setStringField(actor1Record, "ActorGeoCountryCode", fields[37]);
+			OEActor.setStringField(actor1Record, "ActorGeoADM1Code", fields[38]);
+			OEActor.setStringField(actor1Record, "ActorGeoADM2Code", fields[39]);
+			OEActor.setStringField(actor1Record, "ActorGeoFeatureID", fields[42]);
 
-			((CoalesceDateTimeField) actorRecord.getFieldByName("DateTime")).setValue(dt);
+			if(!fields[40].isEmpty() && !fields[41].isEmpty()) {
+				OEActor.buildAndSetGeoField(actor1Record, "ActorGeo", 
+						Float.parseFloat(fields[40]), Float.parseFloat(fields[41]));				
+			}
+			entities.add(actor1);
+			
+			//Actor2 section
+			OEActor actor2 = new OEActor();
+			actor2.setSource(source);
+			CoalesceRecordset actor2RecordSet = actor2
+					.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
+			CoalesceRecord actor2Record = actor2RecordSet.addNew();
+			CoalesceRecordset actor2OERecordSet = actor2.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
+			CoalesceRecord actor2OERecord = actor2OERecordSet.addNew();
+			
+			OEActor.setBooleanField(actor2OERecord, "IsSimulation", false);
+			OEActor.setStringField(actor2OERecord, "DataSource", "GDELT");
+			OEActor.setStringField(actor1OERecord, "OntologyReference", "Actor");
+			
+			OEActor.setStringField(actor2Record, "ActorCode", fields[15]);
+			OEActor.setStringField(actor2Record, "ActorName", fields[16]);
+			OEActor.setStringField(actor2Record, "NameMetaphone", new DoubleMetaphone().doubleMetaphone(fields[16]));
+			OEActor.setStringField(actor2Record, "ActorCountryCode", fields[17]);
+			OEActor.setStringField(actor2Record, "ActorKnownGroupCode", fields[18]);
+			OEActor.setStringField(actor2Record, "ActorEthnicCode", fields[19]);
+			OEActor.setStringField(actor2Record, "ActorReligion1Code", fields[20]);
+			OEActor.setStringField(actor2Record, "ActorReligion2Code", fields[21]);
+			OEActor.setStringField(actor2Record, "ActorType1Code", fields[22]);
+			OEActor.setStringField(actor2Record, "ActorType2Code", fields[23]);
+			OEActor.setStringField(actor2Record, "ActorType3Code", fields[24]);
+			
+			OEActor.setIntegerField(actor2Record, "ActorGeoType", fields[43]);
+			OEActor.setStringField(actor2Record, "ActorGeoFullname", fields[44]);
+			OEActor.setStringField(actor2Record, "ActorGeoCountryCode", fields[45]);
+			OEActor.setStringField(actor2Record, "ActorGeoADM1Code", fields[46]);
+			OEActor.setStringField(actor2Record, "ActorGeoADM2Code", fields[47]);
+			OEActor.setStringField(actor2Record, "ActorGeoFeatureID", fields[50]);
 
-			GDELT_Actor.buildAndSetGeoField(actorRecord, "Actor1Geo");
+			if(!fields[48].isEmpty() && !fields[49].isEmpty()) {
+				OEActor.buildAndSetGeoField(actor2Record, "ActorGeo", Float.parseFloat(fields[48]), 
+						Float.parseFloat(fields[49]));
+			}
+			entities.add(actor2);
 			
 			//Event section
-			GDELT_Event event = new GDELT_Event();
+			OEEvent event = new OEEvent();
+			event.setSource(source);
+			CoalesceRecordset eventRecordSet = event
+					.getCoalesceRecordsetForNamePath("OEEntity/EventSection/EventRecordset");
+			CoalesceRecord eventRecord = eventRecordSet.addNew();
+			CoalesceRecordset eventOERecordSet = event.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
+			CoalesceRecord eventOERecord = eventOERecordSet.addNew();
+			
+			OEActor.setBooleanField(eventOERecord, "IsSimulation", false);
+			OEActor.setStringField(eventOERecord, "DataSource", "GDELT");
+			OEActor.setStringField(actor1OERecord, "OntologyReference", "Event");
+			
+			OEEvent.setIntegerField(eventRecord, "GlobalEventID", fields[0]);
+			OEEvent.setIntegerField(eventRecord, "Day", fields[1]);
+			OEEvent.setIntegerField(eventRecord, "MonthYear", fields[2]);
+			OEEvent.setIntegerField(eventRecord, "Year", fields[3]);
+			OEEvent.setFloatField(eventRecord, "FractionDate", fields[4]);
+			
+			OEEvent.setIntegerField(eventRecord, "IsRootEvent", fields[25]);
+			OEEvent.setStringField(eventRecord, "EventCode", fields[26]);
+			OEEvent.setStringField(eventRecord, "EventBaseCode", fields[27]);
+			OEEvent.setStringField(eventRecord, "EventRootCode", fields[28]);
+			OEEvent.setIntegerField(eventRecord, "QuadClass", fields[29]);
+			OEEvent.setFloatField(eventRecord, "GoldsteinScale", fields[30]);
+			OEEvent.setIntegerField(eventRecord, "NumMentions", fields[30]);
+			OEEvent.setIntegerField(eventRecord, "NumSources", fields[31]);
+			OEEvent.setIntegerField(eventRecord, "NumArticles", fields[32]);
+			OEEvent.setFloatField(eventRecord, "AvgTone", fields[34]);
+			
+			OEEvent.setIntegerField(eventRecord, "ActionGeoType", fields[51]);
+			OEEvent.setStringField(eventRecord, "ActionGeoFullname", fields[52]);
+			OEEvent.setStringField(eventRecord, "ActionGeoCountryCode", fields[53]);
+			OEEvent.setStringField(eventRecord, "ActionGeoADM1Code", fields[54]);
+			OEEvent.setStringField(eventRecord, "ActionGeoADM2Code", fields[55]);
+			OEEvent.setStringField(eventRecord, "ActionGeoFeatureID", fields[58]);
+			OEEvent.setIntegerField(eventRecord, "DateAdded", fields[59]);
+			OEEvent.setStringField(eventRecord, "SourceURL", fields[60]);
+			((CoalesceDateTimeField) eventRecord.getFieldByName("DateTime")).setValue(dt);
+			
+			if(!fields[56].isEmpty() && !fields[57].isEmpty()) {
+				OEEvent.buildAndSetGeoField(eventRecord, "ActionGeo", Float.parseFloat(fields[56]), 
+						Float.parseFloat(fields[57]));
+			}
+			
+			//Linkage Section
+			//TODO: Use the non-deprecated version with all the extra stuff
+			EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor1, false);
+			EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor2, false);
+			EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, event, false);
+			
+			EntityLinkHelper.linkEntities(event, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+			EntityLinkHelper.linkEntities(event, ELinkTypes.HAS_PARTICIPANT, actor1, false);
+			EntityLinkHelper.linkEntities(event, ELinkTypes.HAS_PARTICIPANT, actor2, false);
 
-			CoalesceRecord eventSpecificRecord = eventRecordSet.addNew();
+			EntityLinkHelper.linkEntities(actor1, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+			EntityLinkHelper.linkEntities(actor1, ELinkTypes.IS_A_PARTICIPANT_OF, event, false);
+
+			EntityLinkHelper.linkEntities(actor2, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+			EntityLinkHelper.linkEntities(actor2, ELinkTypes.IS_A_PARTICIPANT_OF, event, false);
+			
+			entities.add(event);
 			
 		}
-		return entity;
-	}
-	
-	private GDELT_Actor createActorFromLine(String gdeltLine) {
-		GDELT_Actor actor = new GDELT_Actor();
-
-		CoalesceRecordset eventRecordSet = actor
-				.getCoalesceRecordsetForNamePath("GDELT_DATA/Actor_Section/Actor_Recordset");
-		CoalesceRecord actorRecord = eventRecordSet.addNew();
-		String[] fields = gdeltLine.split("\t");
-
-		GDELT_Entity.setStringField(actorRecord, "Actor1Code", fields[5]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Name", fields[6]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1CountryCode", fields[7]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1KnownGroupCode", fields[8]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1EthnicCode", fields[9]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Religion1Code", fields[10]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Religion2Code", fields[11]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Type1Code", fields[12]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Type2Code", fields[13]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Type3Code", fields[14]);
-
-		
-		GDELT_Entity.setIntegerField(actorRecord, "Actor1Geo_Type", fields[35]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_Fullname", fields[36]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_CountryCode", fields[37]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_ADM1Code", fields[38]);
-		GDELT_Entity.setFloatField(actorRecord, "Actor1Geo_Lat", fields[39]);
-		GDELT_Entity.setFloatField(actorRecord, "Actor1Geo_Long", fields[40]);
-		GDELT_Entity.setStringField(actorRecord, "Actor1Geo_FeatureID", fields[41]);
-
-		int year = NumberUtils.toInt(fields[56].substring(0, 4));
-		int month = NumberUtils.toInt(fields[56].substring(4, 6));
-		int day = NumberUtils.toInt(fields[56].substring(6, 8));
-		int hour = 0;
-		int min = 0;
-		int sec = 0;
-		DateTime dt = new DateTime(year, month, day, hour, min, sec);
-		((CoalesceDateTimeField) actorRecord.getFieldByName("DateTime")).setValue(dt);
-
-		GDELT_Entity.buildAndSetGeoField(actorRecord, "Actor1Geo");
-			
-		return actor;
+		return entities;
 	}
 
 	public List<CoalesceEntity> loadRecordsFromFile(File file) throws IOException {
@@ -357,7 +250,7 @@ public class GDELT_Ingester {
 		try (BufferedReader fr = new BufferedReader(new FileReader(file))) {
 			String line;
 			while ((line = fr.readLine()) != null) {
-				entities.add(createV2EntityFromLine(line));
+				entities.addAll(createV2EntitiesFromLine(line, file.getName()));
 			}
 		}
 		return entities;
@@ -375,17 +268,17 @@ public class GDELT_Ingester {
 			long beginTime = System.currentTimeMillis();
 			while ((line = fr.readLine()) != null) {
 				try {
-					GDELT_Entity entity = createV2EntityFromLine(line);
-					if (firstEntity) {
+					List<OEEntity> generatedEntities = createV2EntitiesFromLine(line, file.getName());
+					if (firstEntity && !generatedEntities.isEmpty()) {
 						CoalesceFramework framework = new CoalesceFramework();
 						framework.setAuthoritativePersistor(persistor);
-						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
+						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(generatedEntities.get(0)));
 						framework.close();
-						CoalesceObjectFactory.register(GDELT_Entity.class);
+						CoalesceObjectFactory.register(OEEntity.class);
 						firstEntity = false;
 					}
-					entities.add(entity);
-					count++;
+					entities.addAll(generatedEntities);
+					count += generatedEntities.size();
 					if (count % 100 == 0) {
 						long elapsedTime = System.currentTimeMillis() - beginTime;
 						double rate = (double)count / (double)elapsedTime * 1000d;
@@ -416,19 +309,10 @@ public class GDELT_Ingester {
 			props.load(new FileReader(new File(args[0])));
 			File inputFile = new File(args[1]);
 			
-			//BDP Undev cluster
-			/*
-			String dbName = "bdp";
-			String zookeepers = "10.10.10.74";
-			String user = "root";
-			String password = "accumulo";
-			*/
-			
-			//Christina's machine
-			String dbName = "accumulo";
-			String zookeepers = "10.59.62.14";
-			String user = "root";
-			String password = "secret";
+	        String dbName = props.getProperty("database");
+	        String zookeepers = props.getProperty("zookeepers");
+	        String user = props.getProperty("userid");
+	        String password = props.getProperty("password");
 			
 			ServerConn conn = new ServerConn.Builder().db(dbName).serverName(zookeepers).user(user).password(password).build();
 			AccumuloPersistor persistor = new AccumuloPersistor(conn);
