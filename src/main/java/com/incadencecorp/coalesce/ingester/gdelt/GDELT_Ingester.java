@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -37,10 +36,11 @@ import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
 import com.incadencecorp.coalesce.framework.datamodel.ELinkTypes;
 import com.incadencecorp.coalesce.framework.persistance.ICoalescePersistor;
 import com.incadencecorp.coalesce.framework.persistance.ServerConn;
-import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloDataConnectorIT;
+
 import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloPersistor;
 
 public class GDELT_Ingester {
+private	String source = "GDELT";
 	
 	/**
 	 * Method to create Entities from version 2.X GDELT data
@@ -48,7 +48,6 @@ public class GDELT_Ingester {
 	 * @return GDELT_Entity created from the ingest
 	 */
 	private List<OEEntity> createV2EntitiesFromLine(String gdeltLine, String sourceFile) {
-		String source = "GDELT";
 		
 		List<OEEntity> entities = new ArrayList<>();
 		
@@ -272,19 +271,40 @@ public class GDELT_Ingester {
 					if (firstEntity && !generatedEntities.isEmpty()) {
 						CoalesceFramework framework = new CoalesceFramework();
 						framework.setAuthoritativePersistor(persistor);
-						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(generatedEntities.get(0)));
+						//TODO Figure out how to do the template registration better - maybed by standard we should do it in
+						//TODO the entity class 
+						GDELTArtifact artifact = new GDELTArtifact();
+						artifact.setSource(source);
+						CoalesceRecordset gdelt_artifactRecordSet = artifact
+								.getCoalesceRecordsetForNamePath("OEEntity/GDELTArtifactSection/GDELTArtifactRecordset");
+						CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.addNew();
+						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(artifact));
+						OEActor actor1 = new OEActor();
+						actor1.setSource(source);
+						CoalesceRecordset actor1RecordSet = actor1
+								.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
+						CoalesceRecord actorRecord = actor1RecordSet.addNew();
+						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(actor1));
+						OEEvent event = new OEEvent();
+						event.setSource(source);
+						CoalesceRecordset eventRecordSet = event
+								.getCoalesceRecordsetForNamePath("OEEntity/EventSection/EventRecordset");
+						CoalesceRecord eventRecord = eventRecordSet.addNew();
+						framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(event));
 						framework.close();
 						CoalesceObjectFactory.register(OEEntity.class);
+						CoalesceObjectFactory.register(OEActor.class);
+						CoalesceObjectFactory.register(GDELTArtifact.class);
 						firstEntity = false;
 					}
 					entities.addAll(generatedEntities);
 					count += generatedEntities.size();
 					if (count % 100 == 0) {
+						persistor.saveEntity(true, entities.toArray(new CoalesceEntity[entities.size()]));
+						entities.clear();
 						long elapsedTime = System.currentTimeMillis() - beginTime;
 						double rate = (double)count / (double)elapsedTime * 1000d;
 						System.out.println(String.format("%d  @ rate of %f per second.   Current ms: %d", count,rate,System.currentTimeMillis()));
-						persistor.saveEntity(true, entities.toArray(new CoalesceEntity[entities.size()]));
-						entities.clear();
 					}
 				} catch (CoalescePersistorException e) {
 					e.printStackTrace();
