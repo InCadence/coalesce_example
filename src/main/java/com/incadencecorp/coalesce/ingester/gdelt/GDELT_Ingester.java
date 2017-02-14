@@ -330,19 +330,19 @@ public class GDELT_Ingester {
                         long persistTime = System.currentTimeMillis() - beginTime2;
                         double persistRate = (double) count / (double) persistTime * 1000d;
 
-                        LOGGER.info("{}  @ process rate of {} entities per second,   ", count, processRate);
+                        LOGGER.info("{}  @ process rate of {} entities per second, persist rate of {} entities per second.", count, Math.round(processRate),Math.round(persistRate));
                         
-                        LOGGER.info("persist rate of {} entities per second.   Current ms: {}",
-                                    persistRate,
-                                    System.currentTimeMillis());
+//                        LOGGER.info("persist rate of {} entities per second.   Current ms: {}",
+//                                    persistRate,
+//                                    System.currentTimeMillis());
 
                         long totalTime = processTime + persistTime;
 
-                        double percentProcessTime = processTime / totalTime * 100;
+                        double percentProcessTime = (double) processTime / (double) totalTime * 100;
 
-                        double percentPersistTime = persistTime / totalTime * 100;
+                        double percentPersistTime = (double) persistTime / (double) totalTime * 100;
 
-                        LOGGER.info("processTime: {} %   persistTime: {} %", percentProcessTime, percentPersistTime);
+                        LOGGER.info("processTime: {} %   persistTime: {} %", Math.round(percentProcessTime), Math.round(percentPersistTime));
 
                     }
                 }
