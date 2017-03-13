@@ -55,10 +55,10 @@ public class GDELT_Ingester {
 
         artifact.setSource(source);
         CoalesceRecordset gdelt_artifactRecordSet = artifact.getCoalesceRecordsetForNamePath("OEEntity/GDELTArtifactSection/GDELTArtifactRecordset");
-        CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.addNew();
+        CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.getItem(0);
 
         CoalesceRecordset artifactRecordSet = artifact.getCoalesceRecordsetForNamePath("OEEntity/ArtifactSection/ArtifactRecordset");
-        CoalesceRecord artifactRecord = artifactRecordSet.addNew();
+        CoalesceRecord artifactRecord = artifactRecordSet.getItem(0);
 
         entities.add(artifact);
 
@@ -112,9 +112,9 @@ public class GDELT_Ingester {
 
             actor1.setSource(source);
             CoalesceRecordset actor1RecordSet = actor1.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
-            CoalesceRecord actor1Record = actor1RecordSet.addNew();
+            CoalesceRecord actor1Record = actor1RecordSet.getItem(0);
             CoalesceRecordset actor1OERecordSet = actor1.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
-            CoalesceRecord actor1OERecord = actor1OERecordSet.addNew();
+            CoalesceRecord actor1OERecord = actor1OERecordSet.getItem(0);
 
             OEActor.setBooleanField(actor1OERecord, "IsSimulation", false);
             OEActor.setStringField(actor1OERecord, "DataSource", "GDELT");
@@ -144,6 +144,8 @@ public class GDELT_Ingester {
                                             "ActorGeo",
                                             Float.parseFloat(fields[40]),
                                             Float.parseFloat(fields[41]));
+            } else {
+            	LOGGER.debug("Empty Lat/Long for Actor1");
             }
             entities.add(actor1);
 
@@ -151,9 +153,9 @@ public class GDELT_Ingester {
             OEActor actor2 = new OEActor();
             actor2.setSource(source);
             CoalesceRecordset actor2RecordSet = actor2.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
-            CoalesceRecord actor2Record = actor2RecordSet.addNew();
+            CoalesceRecord actor2Record = actor2RecordSet.getItem(0);
             CoalesceRecordset actor2OERecordSet = actor2.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
-            CoalesceRecord actor2OERecord = actor2OERecordSet.addNew();
+            CoalesceRecord actor2OERecord = actor2OERecordSet.getItem(0);
 
             OEActor.setBooleanField(actor2OERecord, "IsSimulation", false);
             OEActor.setStringField(actor2OERecord, "DataSource", "GDELT");
@@ -184,6 +186,8 @@ public class GDELT_Ingester {
                                             "ActorGeo",
                                             Float.parseFloat(fields[48]),
                                             Float.parseFloat(fields[49]));
+            } else {
+            	LOGGER.debug("Empty Lat/Long for Actor2");
             }
             entities.add(actor2);
 
@@ -192,9 +196,9 @@ public class GDELT_Ingester {
 
             event.setSource(source);
             CoalesceRecordset eventRecordSet = event.getCoalesceRecordsetForNamePath("OEEntity/EventSection/EventRecordset");
-            CoalesceRecord eventRecord = eventRecordSet.addNew();
+            CoalesceRecord eventRecord = eventRecordSet.getItem(0);
             CoalesceRecordset eventOERecordSet = event.getCoalesceRecordsetForNamePath("OEEntity/OESection/OERecordset");
-            CoalesceRecord eventOERecord = eventOERecordSet.addNew();
+            CoalesceRecord eventOERecord = eventOERecordSet.getItem(0);
 
             OEActor.setBooleanField(eventOERecord, "IsSimulation", false);
             OEActor.setStringField(eventOERecord, "DataSource", "GDELT");
@@ -233,22 +237,24 @@ public class GDELT_Ingester {
                                             "ActionGeo",
                                             Float.parseFloat(fields[56]),
                                             Float.parseFloat(fields[57]));
+            } else {
+            	LOGGER.debug("Empty Lat/Long for Event");
             }
 
             // Linkage Section
             // TODO: Use the non-deprecated version with all the extra stuff
-            EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor1, false);
-            EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor2, false);
-            EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, event, false);
+            //EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor1, false);
+            //EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, actor2, false);
+            //EntityLinkHelper.linkEntities(artifact, ELinkTypes.HAS_PRODUCT, event, false);
 
-            EntityLinkHelper.linkEntities(event, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+            //EntityLinkHelper.linkEntities(event, ELinkTypes.IS_PRODUCT_OF, artifact, false);
             EntityLinkHelper.linkEntities(event, ELinkTypes.HAS_PARTICIPANT, actor1, false);
             EntityLinkHelper.linkEntities(event, ELinkTypes.HAS_PARTICIPANT, actor2, false);
 
-            EntityLinkHelper.linkEntities(actor1, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+            //EntityLinkHelper.linkEntities(actor1, ELinkTypes.IS_PRODUCT_OF, artifact, false);
             EntityLinkHelper.linkEntities(actor1, ELinkTypes.IS_A_PARTICIPANT_OF, event, false);
 
-            EntityLinkHelper.linkEntities(actor2, ELinkTypes.IS_PRODUCT_OF, artifact, false);
+            //EntityLinkHelper.linkEntities(actor2, ELinkTypes.IS_PRODUCT_OF, artifact, false);
             EntityLinkHelper.linkEntities(actor2, ELinkTypes.IS_A_PARTICIPANT_OF, event, false);
 
             // LOGGER.info("adding event entity");
@@ -295,11 +301,11 @@ public class GDELT_Ingester {
                         framework.setAuthoritativePersistor(persistor);
                         // TODO Figure out how to do the template registration better - maybe by standard we should do it in
                         // TODO the entity class
-                        GDELTArtifact artifact = new GDELTArtifact();
-                        artifact.setSource(source);
-                        CoalesceRecordset gdelt_artifactRecordSet = artifact.getCoalesceRecordsetForNamePath("OEEntity/GDELTArtifactSection/GDELTArtifactRecordset");
-                        CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.addNew();
-                        framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(artifact));
+                        //GDELTArtifact artifact = new GDELTArtifact();
+                        //artifact.setSource(source);
+                        //CoalesceRecordset gdelt_artifactRecordSet = artifact.getCoalesceRecordsetForNamePath("OEEntity/GDELTArtifactSection/GDELTArtifactRecordset");
+                        //CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.addNew();
+                        //framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(artifact));
                         OEActor actor1 = new OEActor();
                         actor1.setSource(source);
                         CoalesceRecordset actor1RecordSet = actor1.getCoalesceRecordsetForNamePath("OEEntity/ActorSection/ActorRecordset");
@@ -313,7 +319,7 @@ public class GDELT_Ingester {
                         framework.close();
                         CoalesceObjectFactory.register(OEEntity.class);
                         CoalesceObjectFactory.register(OEActor.class);
-                        CoalesceObjectFactory.register(GDELTArtifact.class);
+                        //CoalesceObjectFactory.register(GDELTArtifact.class);
                         firstEntity = false;
                     }
                     entities.addAll(generatedEntities);

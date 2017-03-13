@@ -75,7 +75,7 @@ public class OEEntity extends CoalesceEntity {
 	public static void buildAndSetGeoField(CoalesceRecord eventRecord, String prefix, Float lat, Float lon) {
 		GeometryFactory factory = new GeometryFactory();
 		try {
-			if (lat != null && lon != null && (lat != 0 || lon != 0)) {
+			if ((lat != null) && (lon != null) ) {
 				Point point = factory.createPoint(new Coordinate(lon, lat));
 				((CoalesceCoordinateField) eventRecord.getFieldByName(prefix + "Location")).setValue(point);
 			}

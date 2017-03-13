@@ -12,11 +12,12 @@ public class OEArtifact extends OEEntity {
 		CoalesceSection artifactSection = CoalesceSection.create(this, "ArtifactSection");
 		CoalesceRecordset artifactRecordset = CoalesceRecordset.create(artifactSection, "ArtifactRecordset");
 		
-		artifactRecordset.addNew();
 		
 		CoalesceFieldDefinition.create(artifactRecordset, "Md5Sum", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(artifactRecordset, "DateIngested", ECoalesceFieldDataTypes.DATE_TIME_TYPE);
 		CoalesceFieldDefinition.create(artifactRecordset, "ArtifactDate", ECoalesceFieldDataTypes.DATE_TIME_TYPE);
+
+		artifactRecordset.addNew();
 		
 	}
 

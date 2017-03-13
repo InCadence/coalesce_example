@@ -16,11 +16,11 @@ public class GDELTArtifact extends OEArtifact {
 		CoalesceSection gdeltArtifactSection = CoalesceSection.create(this, "GDELTArtifactSection");
 		CoalesceRecordset gdeltArtifactRecordset = CoalesceRecordset.create(gdeltArtifactSection, "GDELTArtifactRecordset");
 		
-		gdeltArtifactRecordset.addNew();
-		
 		CoalesceFieldDefinition.create(gdeltArtifactRecordset, "SourceFileName", ECoalesceFieldDataTypes.STRING_TYPE);
 		CoalesceFieldDefinition.create(gdeltArtifactRecordset, "GlobalEventID", ECoalesceFieldDataTypes.INTEGER_TYPE);
 		CoalesceFieldDefinition.create(gdeltArtifactRecordset, "RawText", ECoalesceFieldDataTypes.STRING_TYPE);
+		
+		gdeltArtifactRecordset.addNew();
 	}
 
 }
