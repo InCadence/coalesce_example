@@ -7,11 +7,15 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
 
 public class GDELTArtifact extends OEArtifact {
-
+	//protected static String VERSION = "0.1";
+	private static String TITLE = "GDELTArtifact";
 	public GDELTArtifact() {
 		
 		setName("GDELTArtifact");
 		setSource("GDELT");
+		setVersion(VERSION);
+		setTitle(TITLE);
+
 		
 		CoalesceSection gdeltArtifactSection = CoalesceSection.create(this, "GDELTArtifactSection");
 		CoalesceRecordset gdeltArtifactRecordset = CoalesceRecordset.create(gdeltArtifactSection, "GDELTArtifactRecordset");
