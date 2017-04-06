@@ -20,8 +20,21 @@
 		</dependency>
 		<dependency>
 			<groupId>com.incadencecorp.coalesce</groupId>
+			<artifactId>coalesce-framework-persister-postgresql</artifactId>
+			<version>0.0.25-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.incadencecorp.coalesce</groupId>
 			<artifactId>coalesce-framework-persister-accumulo</artifactId>
 			<version>0.0.25-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.scala-lang.modules</groupId>
+					<artifactId>
+						scala-parser-combinators_2.11
+					</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>xml-apis</groupId>
@@ -43,6 +56,26 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
 <!-- 			<scope>provided</scope> -->
+		</dependency>
+				<dependency>
+			<groupId>com.incadencecorp.oe.common</groupId>
+			<artifactId>oe-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.incadencecorp.oe.entities</groupId>
+			<artifactId>oe-entities</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.incadencecorp.oe.ingest</groupId>
+			<artifactId>oe-ingest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.incadencecorp.oe.ingest.gdelt</groupId>
+			<artifactId>oe-ingest-gdelt</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

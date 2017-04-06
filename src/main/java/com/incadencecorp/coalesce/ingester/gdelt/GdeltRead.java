@@ -19,6 +19,8 @@ import com.incadencecorp.coalesce.framework.persistance.ServerConn;
 import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloPersistor;
 import com.incadencecorp.coalesce.framework.persistance.postgres.PostGreSQLPersistor;
 import com.incadencecorp.coalesce.framework.persistance.postgres.PostGreSQLPersistorExt2;
+import com.incadencecorp.coalesce.search.resultset.*;
+import com.incadencecorp.oe.ingest.gdelt.artifact.GDELTArtifact;
 
 
 public class GdeltRead {
@@ -27,8 +29,7 @@ public class GdeltRead {
     private static void coalSearch(ServerConn conn) 
     		throws CQLException, SQLException, CoalesceException, JSONException {
     	
-    	//AccumuloPersistor persistor = new AccumuloPersistor(conn);
-        //PostGreSQLDataConnector dbconn = new PostGreSQLDataConnector(conn,null);
+ 
         //AccumuloPersistor persistor = new AccumuloPersistor(conn);
         PostGreSQLPersistorExt2 persistor = new PostGreSQLPersistorExt2();
         persistor.setConnectionSettings(conn);
@@ -36,11 +37,17 @@ public class GdeltRead {
         CoalesceFramework coalesceFramework = new CoalesceFramework();
     	coalesceFramework.setAuthoritativePersistor(persistor);	
     	
-    	Filter filter = CQL.toFilter("FractionDate > 2017.052095");
-    	Query query = new Query("OEEvent_GDELT_0.1.EventSection.EventRecordset", filter);
+    	// Postgres will not accept no filter
+    	Filter filter = CQL.toFilter("not (GDELTArtifact.SourceFileName = '')");
+
+        
+    	Query query = new Query(GDELTArtifact.getQueryName());
+    	query.setFilter(filter);
+
+    	query.setStartIndex(0);
     	System.out.println("Running query");
 		long qstartTime = System.currentTimeMillis();
-		CachedRowSet rowset = persistor.search(query);    
+		CachedRowSet rowset = persistor.search(query).getResults();
 		long qstopTime = System.currentTimeMillis();
 		System.out.println("Query Elapsed time was " + (qstopTime - qstartTime)/1000.0 + " seconds.");
 		
@@ -49,7 +56,7 @@ public class GdeltRead {
 		String[] objectIDs = new String[rowset.size()];
 		int row = 0;
 		while (rowset.next()) {
-			objectIDs[row] = rowset.getString("objectid");
+			objectIDs[row] = rowset.getString("objectKey");
 		    ++row;
 		}
 		
@@ -69,8 +76,8 @@ public class GdeltRead {
     	
     	String dbName = "coalesce";
 	   	String zookeepers = "accumulodev";
-	   	String user = "postgres";
-	   	String password = "secret";
+	   	String user = "enterprisedb";
+	   	String password = "enterprisedb";
 	   	ServerConn conn = new ServerConn.Builder().db(dbName).serverName(zookeepers).user(user).password(password).build();
 	   	/* try {
 			Thread.sleep(20000);
