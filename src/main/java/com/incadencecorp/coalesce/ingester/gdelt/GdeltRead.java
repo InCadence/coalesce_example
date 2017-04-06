@@ -37,11 +37,12 @@ public class GdeltRead {
         CoalesceFramework coalesceFramework = new CoalesceFramework();
     	coalesceFramework.setAuthoritativePersistor(persistor);	
     	
-    	// Postgres will not accept no filter
-    	Filter filter = CQL.toFilter("not (GDELTArtifact.SourceFileName = '')");
+    	// Postgres will not accept no filter which it should
+    	// But we need a some filter to work.
+    	Filter filter = CQL.toFilter("not ("+GDELTArtifact.getQueryName()+".SourceFileName = '')");
 
         
-    	Query query = new Query(GDELTArtifact.getQueryName());
+    	Query query = new Query();
     	query.setFilter(filter);
 
     	query.setStartIndex(0);
