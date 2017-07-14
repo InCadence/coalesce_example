@@ -10,20 +10,20 @@ public class GenericArtifact extends GDELTEntity {
 	public GenericArtifact() {
 		initialize();
 		
-		CoalesceSection artifactSection = CoalesceSection.create(this, ArtifactConstants.ArtifactSection);
-		CoalesceRecordset artifactRecordset = CoalesceRecordset.create(artifactSection, ArtifactConstants.ArtifactRecordset);
+		CoalesceSection artifactSection = CoalesceSection.create(this, GDELTArtifactConstants.ArtifactSection);
+		CoalesceRecordset artifactRecordset = CoalesceRecordset.create(artifactSection, GDELTArtifactConstants.ArtifactRecordset);
 		
-		CoalesceFieldDefinition.create(artifactRecordset, ArtifactConstants.Md5Sum, ECoalesceFieldDataTypes.STRING_TYPE);
-		CoalesceFieldDefinition.create(artifactRecordset, ArtifactConstants.DateIngested, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
-		CoalesceFieldDefinition.create(artifactRecordset, ArtifactConstants.ArtifactDate, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
+		CoalesceFieldDefinition.create(artifactRecordset, GDELTArtifactConstants.Md5Sum, ECoalesceFieldDataTypes.STRING_TYPE);
+		CoalesceFieldDefinition.create(artifactRecordset, GDELTArtifactConstants.DateIngested, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
+		CoalesceFieldDefinition.create(artifactRecordset, GDELTArtifactConstants.ArtifactDate, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
 		
 		artifactRecordset.addNew();
 	}
 	public  static String getRecordSetName() {
-		return ArtifactConstants.ArtifactRecordset;
+		return GDELTArtifactConstants.ArtifactRecordset;
 	}
 
 	public static  String getQueryName() {
-		return ArtifactConstants.ArtifactRecordset;
+		return GDELTArtifactConstants.ArtifactRecordset;
 	}
 }

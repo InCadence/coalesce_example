@@ -1,6 +1,6 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
-public interface ArtifactConstants {	
+public interface GDELTArtifactConstants {	
 	String ArtifactSection = "ArtifactSection";
 	String ArtifactRecordset = "ArtifactRecordset";
 	

@@ -15,15 +15,15 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
 public class GDELTAgent extends CoalesceEntity {
 
-    private static String NAME = AgentConstants.GDELTAgentName;
-    private static String TITLE = AgentConstants.Title;
+    private static String NAME = GDELTAgentConstants.GDELTAgentName;
+    private static String TITLE = GDELTAgentConstants.Title;
     private static String SOURCE = GDELTEntityConstants.Source;
     private static String VERSION = GDELTEntityConstants.Version;
 	
     public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
 	{
-		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(NAME, AgentConstants.Source,
-				AgentConstants.Version);
+		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(NAME, GDELTAgentConstants.Source,
+				GDELTAgentConstants.Version);
 		// Entity not registered, create template and register it.
 		if (template == null) {
             GDELTAgent entity = new GDELTAgent();
@@ -57,8 +57,8 @@ public class GDELTAgent extends CoalesceEntity {
 
         CoalesceLinkageSection.create(this);
 
-        CoalesceSection agentSection = CoalesceSection.create(this, AgentConstants.AgentSection);
-        CoalesceRecordset agentRecordSet = AgentRecord.createRecordset(agentSection, AgentConstants.AgentRecordset);
+        CoalesceSection agentSection = CoalesceSection.create(this, GDELTAgentConstants.AgentSection);
+        CoalesceRecordset agentRecordSet = GDELTAgentRecord.createRecordset(agentSection, GDELTAgentConstants.AgentRecordset);
 
         agentRecordSet.addNew();
     	
@@ -66,10 +66,10 @@ public class GDELTAgent extends CoalesceEntity {
     }
     
 	public  static String getRecordSetName() {
-		return AgentConstants.AgentRecordset;
+		return GDELTAgentConstants.AgentRecordset;
 	}
 
 	public static  String getQueryName() {
-		return AgentConstants.AgentRecordset;
+		return GDELTAgentConstants.AgentRecordset;
 	}
 }

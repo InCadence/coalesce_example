@@ -18,7 +18,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-public class AgentRecord extends GDELTRecord {
+public class GDELTAgentRecord extends GDELTRecord {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GDELTRecord.class);
 
@@ -29,7 +29,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentCode()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentCode)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentCode)).getValue();
     }
 
     /**
@@ -39,7 +39,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(agentCode))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentCode)).setValue(agentCode);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentCode)).setValue(agentCode);
         }
     }
 
@@ -48,7 +48,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentName()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentName)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentName)).getValue();
     }
 
     /**
@@ -58,7 +58,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(agentName))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentName)).setValue(agentName);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentName)).setValue(agentName);
         }
     }
 
@@ -67,7 +67,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getNameMetaphone()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.NameMetaphone)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.NameMetaphone)).getValue();
     }
 
     /**
@@ -77,7 +77,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(NameMetaphone))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.NameMetaphone)).setValue(NameMetaphone);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.NameMetaphone)).setValue(NameMetaphone);
         }
     }
 
@@ -86,7 +86,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentCountryCode()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentCountryCode)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentCountryCode)).getValue();
     }
 
     /**
@@ -96,7 +96,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentCountryCode))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentCountryCode)).setValue(AgentCountryCode);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentCountryCode)).setValue(AgentCountryCode);
         }
     }
 
@@ -105,7 +105,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentKnownGroupCode()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentKnownGroupCode)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentKnownGroupCode)).getValue();
     }
 
     /**
@@ -115,7 +115,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentKnownGroupCode))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentKnownGroupCode)).setValue(AgentKnownGroupCode);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentKnownGroupCode)).setValue(AgentKnownGroupCode);
         }
     }
 
@@ -124,7 +124,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentEthnicCode()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentEthnicCode)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentEthnicCode)).getValue();
     }
 
     /**
@@ -134,7 +134,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentEthnicCode))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentEthnicCode)).setValue(AgentEthnicCode);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentEthnicCode)).setValue(AgentEthnicCode);
         }
     }
 
@@ -143,7 +143,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentReligion1Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentReligion1Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentReligion1Code)).getValue();
     }
 
     /**
@@ -153,7 +153,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentReligion1Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentReligion1Code)).setValue(AgentReligion1Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentReligion1Code)).setValue(AgentReligion1Code);
         }
     }
 
@@ -162,7 +162,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentReligion2Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentReligion2Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentReligion2Code)).getValue();
     }
 
     /**
@@ -172,7 +172,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentReligion2Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentReligion2Code)).setValue(AgentReligion2Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentReligion2Code)).setValue(AgentReligion2Code);
         }
     }
 
@@ -181,7 +181,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentType1Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType1Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType1Code)).getValue();
     }
 
     /**
@@ -191,7 +191,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentType1Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType1Code)).setValue(AgentType1Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType1Code)).setValue(AgentType1Code);
         }
     }
 
@@ -200,7 +200,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentType2Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType2Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType2Code)).getValue();
     }
 
     /**
@@ -210,7 +210,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentType2Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType2Code)).setValue(AgentType2Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType2Code)).setValue(AgentType2Code);
         }
     }
 
@@ -219,7 +219,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentType3Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType3Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType3Code)).getValue();
     }
 
     /**
@@ -229,7 +229,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentType3Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentType3Code)).setValue(AgentType3Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentType3Code)).setValue(AgentType3Code);
         }
     }
 
@@ -240,7 +240,7 @@ public class AgentRecord extends GDELTRecord {
     {
         try
         {
-            return ((CoalesceIntegerField) this.getFieldByName(AgentConstants.AgentGeoType)).getValue();
+            return ((CoalesceIntegerField) this.getFieldByName(GDELTAgentConstants.AgentGeoType)).getValue();
         }
         catch (CoalesceDataFormatException e)
         {
@@ -257,7 +257,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentGeoType) && NumberUtils.isNumber(AgentGeoType))
         {
-            ((CoalesceIntegerField) this.getFieldByName(AgentConstants.AgentGeoType)).setValue(NumberUtils.toInt(AgentGeoType));
+            ((CoalesceIntegerField) this.getFieldByName(GDELTAgentConstants.AgentGeoType)).setValue(NumberUtils.toInt(AgentGeoType));
         }
     }
 
@@ -266,7 +266,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public void setAgentGeoType(int AgentGeoType)
     {
-        ((CoalesceIntegerField) this.getFieldByName(AgentConstants.AgentGeoType)).setValue(AgentGeoType);
+        ((CoalesceIntegerField) this.getFieldByName(GDELTAgentConstants.AgentGeoType)).setValue(AgentGeoType);
     }
 
     /**
@@ -274,7 +274,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentGeoFullname()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoFullname)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFullname)).getValue();
     }
 
     /**
@@ -284,7 +284,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentGeoFullname))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoFullname)).setValue(AgentGeoFullname);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFullname)).setValue(AgentGeoFullname);
         }
     }
 
@@ -293,7 +293,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentGeoCountryCode()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoCountryCode)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoCountryCode)).getValue();
     }
 
     /**
@@ -303,7 +303,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentGeoCountryCode))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoCountryCode)).setValue(AgentGeoCountryCode);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoCountryCode)).setValue(AgentGeoCountryCode);
         }
     }
 
@@ -312,7 +312,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentGeoADM1Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoADM1Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoADM1Code)).getValue();
     }
 
     /**
@@ -322,7 +322,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentGeoADM1Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoADM1Code)).setValue(AgentGeoADM1Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoADM1Code)).setValue(AgentGeoADM1Code);
         }
     }
 
@@ -331,7 +331,7 @@ public class AgentRecord extends GDELTRecord {
      */
     public String getAgentGeoADM2Code()
     {
-        return ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoADM2Code)).getValue();
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoADM2Code)).getValue();
     }
 
     /**
@@ -341,7 +341,7 @@ public class AgentRecord extends GDELTRecord {
     {
         if (StringUtils.isNotBlank(AgentGeoADM2Code))
         {
-            ((CoalesceStringField) this.getFieldByName(AgentConstants.AgentGeoADM2Code)).setValue(AgentGeoADM2Code);
+            ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoADM2Code)).setValue(AgentGeoADM2Code);
         }
     }
 
@@ -352,7 +352,7 @@ public class AgentRecord extends GDELTRecord {
     {
         try
         {
-            return ((CoalesceCoordinateField) this.getFieldByName(AgentConstants.AgentGeoLocation)).getValue();
+            return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
         }
         catch (CoalesceDataFormatException e)
         {
@@ -368,7 +368,7 @@ public class AgentRecord extends GDELTRecord {
     {
         try
         {
-            return ((CoalesceCoordinateField) this.getFieldByName(AgentConstants.AgentGeoLocation)).getValue().toString();
+            return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue().toString();
         }
         catch (CoalesceDataFormatException e)
         {
@@ -390,12 +390,12 @@ public class AgentRecord extends GDELTRecord {
                 double lat = Float.parseFloat(Agent2Geo_Lat);
                 double lon = Float.parseFloat(Agent2Geo_Long);
 
-                buildAndSetGeoField(this, AgentConstants.AgentGeo, (float) lat, (float) lon);
+                buildAndSetGeoField(this, GDELTAgentConstants.AgentGeo, (float) lat, (float) lon);
             }
             else
             {
                 // Create a dummy record at the south pole
-                buildAndSetGeoField(this, AgentConstants.AgentGeo, (float) -90.0, (float) -180.0);
+                buildAndSetGeoField(this, GDELTAgentConstants.AgentGeo, (float) -90.0, (float) -180.0);
             }
         }
         catch (CoalesceDataFormatException e)
@@ -438,54 +438,54 @@ public class AgentRecord extends GDELTRecord {
     public static CoalesceRecordset createRecordset(CoalesceSection section, String pathName)
     {
         CoalesceRecordset recordSet = CoalesceRecordset.create(section, pathName);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.NameMetaphone, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.NameMetaphone, ECoalesceFieldDataTypes.STRING_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentCountryCode,
+                                       GDELTAgentConstants.AgentCountryCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        false);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentKnownGroupCode,
+                                       GDELTAgentConstants.AgentKnownGroupCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentEthnicCode, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentEthnicCode, ECoalesceFieldDataTypes.STRING_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentReligion1Code,
+                                       GDELTAgentConstants.AgentReligion1Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentReligion2Code,
+                                       GDELTAgentConstants.AgentReligion2Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType1Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType2Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType3Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType1Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType2Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType3Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
 
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoFullname,
+                                       GDELTAgentConstants.AgentGeoFullname,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoCountryCode,
+                                       GDELTAgentConstants.AgentGeoCountryCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoADM1Code,
+                                       GDELTAgentConstants.AgentGeoADM1Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoADM2Code,
+                                       GDELTAgentConstants.AgentGeoADM2Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoFeatureID,
+                                       GDELTAgentConstants.AgentGeoFeatureID,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
 
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoLocation,
+                                       GDELTAgentConstants.AgentGeoLocation,
                                        ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 
         return recordSet;

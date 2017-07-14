@@ -279,86 +279,86 @@ public class GDELTRecord extends CoalesceRecord {
         CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.Tags, ECoalesceFieldDataTypes.STRING_LIST_TYPE);
 
         // event record setup
-        CoalesceFieldDefinition.create(recordSet, EventConstants.GlobalEventID, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.Day, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.MonthYear, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.Year, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.FractionDate, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.GlobalEventID, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.Day, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.MonthYear, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.Year, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.FractionDate, ECoalesceFieldDataTypes.FLOAT_TYPE);
 
-        CoalesceFieldDefinition.create(recordSet, EventConstants.IsRootEvent, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.EventCode, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.EventBaseCode, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.EventRootCode, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.QuadClass, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.GoldsteinScale, ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.NumMentions, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.NumSources, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.NumArticles, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.AvgTone, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.IsRootEvent, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.EventCode, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.EventBaseCode, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.EventRootCode, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.QuadClass, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.GoldsteinScale, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.NumMentions, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.NumSources, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.NumArticles, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.AvgTone, ECoalesceFieldDataTypes.FLOAT_TYPE);
 
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoFullname, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoCountryCode, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoADM1Code, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoADM2Code, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.ActionGeoFeatureID, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.DateAdded, ECoalesceFieldDataTypes.INTEGER_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.SourceURL, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, EventConstants.DateTime, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoFullname, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoCountryCode, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoADM1Code, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoADM2Code, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoFeatureID, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DateAdded, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.SourceURL, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DateTime, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
 
         CoalesceFieldDefinition.create(recordSet,
-                                       EventConstants.ActionGeoLocation,
+                                       GDELTEventConstants.ActionGeoLocation,
                                        ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 
         // agent record setup
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.NameMetaphone, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.NameMetaphone, ECoalesceFieldDataTypes.STRING_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentCountryCode,
+                                       GDELTAgentConstants.AgentCountryCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        false);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentKnownGroupCode,
+                                       GDELTAgentConstants.AgentKnownGroupCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentEthnicCode, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentEthnicCode, ECoalesceFieldDataTypes.STRING_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentReligion1Code,
+                                       GDELTAgentConstants.AgentReligion1Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentReligion2Code,
+                                       GDELTAgentConstants.AgentReligion2Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType1Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType2Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentType3Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType1Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType2Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType3Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
 
-        CoalesceFieldDefinition.create(recordSet, AgentConstants.AgentGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE, true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoFullname,
+                                       GDELTAgentConstants.AgentGeoFullname,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoCountryCode,
+                                       GDELTAgentConstants.AgentGeoCountryCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoADM1Code,
+                                       GDELTAgentConstants.AgentGeoADM1Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoADM2Code,
+                                       GDELTAgentConstants.AgentGeoADM2Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoFeatureID,
+                                       GDELTAgentConstants.AgentGeoFeatureID,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
 
         CoalesceFieldDefinition.create(recordSet,
-                                       AgentConstants.AgentGeoLocation,
+                                       GDELTAgentConstants.AgentGeoLocation,
                                        ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 
         return recordSet;

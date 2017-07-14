@@ -1,6 +1,6 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
-public interface AgentConstants {
+public interface GDELTAgentConstants {
 
 	static final String GDELTAgentName = "GDELTAgent";
 	static final String Source = "";
