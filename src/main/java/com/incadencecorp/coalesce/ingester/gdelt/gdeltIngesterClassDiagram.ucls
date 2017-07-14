@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTArtifact" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTArtifact.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="171" width="220" x="2627" y="1893"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GenericArtifact" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GenericArtifact.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="190" x="2627" y="656"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTEntityConstants" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTEntityConstants.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="202" x="515" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.ArtifactConstants" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/ArtifactConstants.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="190" x="1111" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELT_Ingester" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELT_Ingester.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="315" width="314" x="757" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="6" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.AgentConstants" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/AgentConstants.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="513" width="190" x="1341" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.FieldSetter" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/FieldSetter.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="405" width="339" x="1571" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTCoalesceFramework" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTCoalesceFramework.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="281" x="757" y="656"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="9" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTConstants" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTConstants.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="279" width="190" x="1950" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <enumeration id="10" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTFields.Fields" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTFields.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1197" width="190" x="3600" y="656"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="11" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTEntity" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTEntity.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="261" width="321" x="3199" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="12" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTFields" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTFields.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="190" x="3600" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="13" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTAgent" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTAgent.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="207" width="321" x="3239" y="656"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.AgentRecord" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/AgentRecord.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1017" width="325" x="3017" y="2752"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTRecord" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTRecord.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="819" width="326" x="3199" y="1893"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.EventRecord" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/EventRecord.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1467" width="326" x="3382" y="2752"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTEvent" project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTEvent.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="207" width="321" x="2857" y="656"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="18" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.EventConstants" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/EventConstants.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="639" width="190" x="2180" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="19" language="java" name="com.incadencecorp.coalesce.ingester.gdelt.GDELTLinkHelper" 
+    project="gdelt_ingester" 
+    file="/gdelt_ingester/src/main/java/com/incadencecorp/coalesce/ingester/gdelt/GDELTLinkHelper.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="387" width="749" x="2410" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <nesting id="21">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="23">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="24" name="gdeltRecord"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="29">    
+    <bendpoint x="3208" y="656"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="30" name="gDELTRecord"/>      
+      <multiplicity id="31" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="33" name="gdeltCoalesceFramework"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
