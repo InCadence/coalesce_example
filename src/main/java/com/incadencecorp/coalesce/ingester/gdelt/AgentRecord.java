@@ -14,7 +14,6 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceStringField;
 import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
-import com.incadencecorp.coalesce.ingester.gdelt.GDELTFields.Fields;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
@@ -24,25 +23,6 @@ public class AgentRecord extends GDELTRecord {
     private static final Logger LOGGER = LoggerFactory.getLogger(GDELTRecord.class);
 
     private static GeometryFactory factory = new GeometryFactory();
-
-    // Agent Record fields
-    private String AgentCode;
-    private String AgentName;
-    private String NameMetaphone;
-    private String AgentCountryCode;
-    private String AgentKnownGroupCode;
-    private String AgentEthnicCode;
-    private String AgentReligion1Code;
-    private String AgentReligion2Code;
-    private String AgentType1Code;
-    private String AgentType2Code;
-    private String AgentType3Code;
-    private String AgentGeoType;
-    private String AgentGeoFullname;
-    private String AgentGeoCountryCode;
-    private String AgentGeoADM1Code;
-    private String AgentGeoADM2Code;
-    private String AgentGeoFeatureID;
 
     /**
      * @return the agentCode
