@@ -13,12 +13,12 @@ import com.incadencecorp.coalesce.search.api.ICoalesceSearchPersistor;
 import com.incadencecorp.unity.common.connectors.FilePropertyConnector;
 import com.incadencecorp.unity.common.factories.PropertyFactory;
 
-public class GDELTCoalesceFramework {
+public class CoalesceConnection {
 	private CoalesceFramework framework;
 	private ICoalesceSearchPersistor persistor;
-    private static final Logger LOGGER = LoggerFactory.getLogger(GDELTCoalesceFramework.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoalesceConnection.class);
 
-	public GDELTCoalesceFramework() throws CoalescePersistorException {
+	public CoalesceConnection() throws CoalescePersistorException {
         framework = new CoalesceFramework();
         framework.setIsAnsyncUpdates(false);
 

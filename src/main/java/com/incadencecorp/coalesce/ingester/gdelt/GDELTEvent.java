@@ -7,20 +7,19 @@ import org.xml.sax.SAXException;
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
 import com.incadencecorp.coalesce.framework.CoalesceFramework;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceLinkageSection;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
-public class GDELTEvent extends GDELTEntity {
+
+public class GDELTEvent extends CoalesceEntity  {
 	
-	private static String NAME = EventConstants.GDELTEventName;
-	private static String TITLE = EventConstants.Title;
-	private GDELTRecord gdeltRecord;
-    public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
+	public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
     {
-		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(NAME, EventConstants.Source,
-				EventConstants.Version);
+		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTEventConstants.Name, GDELTEventConstants.Source,
+				GDELTEventConstants.Version);
 		// Entity not registered, create template and register it.
 		if (template == null) {
             GDELTEvent entity = new GDELTEvent();
@@ -32,12 +31,13 @@ public class GDELTEvent extends GDELTEntity {
 	}	
     
 	public GDELTEvent() {
-		initialize();
+
 	}
 	
 	@Override
 	public boolean initialize() {
-		if(!initializeEntity(NAME, SOURCE, VERSION, "", "", TITLE)) {
+		if(!initializeEntity(GDELTEventConstants.Name, GDELTEventConstants.Source,
+				GDELTEventConstants.Version, "", "", GDELTEventConstants.Title)) {
 			return false;
 		}
 		
@@ -49,13 +49,12 @@ public class GDELTEvent extends GDELTEntity {
     	if(!super.initializeEntity(name, source, version, entityId, entityIdType, title)) {
 			return false;
 		}
-    	gdeltRecord = new EventRecord();
         setAttribute("classname", GDELTEvent.class.getName());
 	
 		CoalesceLinkageSection.create(this);
 		
-		CoalesceSection eventSection = CoalesceSection.create(this, EventConstants.EventSection);
-		CoalesceRecordset eventRecordSet = gdeltRecord.createRecordSet(eventSection, EventConstants.EventRecordset);
+		CoalesceSection eventSection = CoalesceSection.create(this, GDELTEventConstants.EventSection);
+		CoalesceRecordset eventRecordSet = GDELTEventRecord.createRecordSet(eventSection, GDELTEventConstants.EventRecordset);
 
 		eventRecordSet.addNew();
     	
@@ -63,10 +62,10 @@ public class GDELTEvent extends GDELTEntity {
     }
 	
 	public  static String getRecordSetName() {
-		return EventConstants.EventRecordset;
+		return GDELTEventConstants.EventRecordset;
 	}
 
 	public static  String getQueryName() {
-		return EventConstants.EventRecordset;
+		return GDELTEventConstants.EventRecordset;
 	}
 }
