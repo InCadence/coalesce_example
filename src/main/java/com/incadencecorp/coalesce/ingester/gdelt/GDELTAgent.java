@@ -7,15 +7,18 @@ import org.xml.sax.SAXException;
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
 import com.incadencecorp.coalesce.framework.CoalesceFramework;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceLinkageSection;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
-public class GDELTAgent extends GDELTEntity {
+public class GDELTAgent extends CoalesceEntity {
 
     private static String NAME = AgentConstants.GDELTAgentName;
     private static String TITLE = AgentConstants.Title;
+    private static String SOURCE = GDELTEntityConstants.Source;
+    private static String VERSION = GDELTEntityConstants.Version;
 	
     public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
 	{
