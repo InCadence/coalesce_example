@@ -1,5 +1,6 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.xml.sax.SAXException;
@@ -10,6 +11,7 @@ import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceLinkageSection;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
@@ -68,4 +70,17 @@ public class GDELTEvent extends CoalesceEntity  {
 	public static  String getQueryName() {
 		return GDELTEventConstants.EventRecordset;
 	}
+	
+	public GDELTEventRecord getRecord() {
+		return getRecord(0);
+	}
+	
+	public GDELTEventRecord getRecord(int record) {
+	    CoalesceRecordset eventRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEntityConstants.GDELTEntity + File.separator
+	            + GDELTEventConstants.EventSection + File.separator + GDELTEventConstants.EventRecordset);
+	    return  (GDELTEventRecord) eventRecordSet.getItem(record);
+	    
+	}
+ 
+
 }
