@@ -3,10 +3,12 @@
  */
 package com.incadencecorp.coalesce.ingester.gdelt;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.incadencecorp.coalesce.common.exceptions.CoalesceDataFormatException;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceDateTimeField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceFieldDefinition;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceIntegerField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
@@ -41,6 +43,14 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 	public void setSourceFileName(String sourceFileName) {
 		 ((CoalesceStringField) this.getFieldByName(GDELTArtifactConstants.SourceFileName)).setValue(sourceFileName);
 	}
+	
+	public String getMd5Sum() {
+		return ((CoalesceStringField) this.getFieldByName(GDELTArtifactConstants.Md5Sum)).getValue();
+	}
+	public void setMd5Sum(String md5Sum) {
+		 ((CoalesceStringField) this.getFieldByName(GDELTArtifactConstants.Md5Sum)).setValue(md5Sum);
+	}
+	
 	public int getGlobalEventID()  {
 		try {
 			return ((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.GlobalEventID)).getValue();
@@ -61,17 +71,30 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 		((CoalesceStringField) this.getFieldByName(GDELTArtifactConstants.RawText)).setValue(rawText);
 	}
 	
-	public int getArtifactDate() {
+	public DateTime getArtifactDate() {
 		try {
-			return ((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).getValue();
+			return ((CoalesceDateTimeField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).getValue();
 		} catch (CoalesceDataFormatException e) {
 			LOGGER.error(e.getMessage(),e);
-			return 0;
+			return new DateTime(0);
 		}	
 	}
 
-	public void setArtifactDate(int dateAdded) {
-		((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).setValue(dateAdded);
+	public void setArtifactDate(DateTime dateAdded) {
+		((CoalesceDateTimeField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).setValue(dateAdded);
+	}
+	
+	public DateTime getDateIngested() {
+		try {
+			return ((CoalesceDateTimeField) this.getFieldByName(GDELTArtifactConstants.DateIngested)).getValue();
+		} catch (CoalesceDataFormatException e) {
+			LOGGER.error(e.getMessage(),e);
+			return new DateTime(0);
+		}	
+	}
+
+	public void setDateIngested(DateTime dateAdded) {
+		((CoalesceDateTimeField) this.getFieldByName(GDELTArtifactConstants.DateIngested)).setValue(dateAdded);
 	}
 	
 	public static CoalesceRecordset createRecordSet(CoalesceSection section, String pathName) {
