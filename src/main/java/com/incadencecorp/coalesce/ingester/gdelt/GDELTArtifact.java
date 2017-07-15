@@ -73,9 +73,9 @@ public class GDELTArtifact extends CoalesceEntity {
 
         CoalesceLinkageSection.create(this);
 
-        CoalesceSection artifactSection = CoalesceSection.create(this, GDELTArtifactConstants.GDELTArtifactSection);
+        CoalesceSection artifactSection = CoalesceSection.create(this, GDELTArtifactConstants.ArtifactSection);
         CoalesceRecordset artifactRecordSet = GDELTArtifactRecord.createRecordset(artifactSection,
-                                                                               GDELTArtifactConstants.GDELTArtifactRecordset);
+                                                                               GDELTArtifactConstants.ArtifactRecordset);
 
         artifactRecordSet.addNew();
 
@@ -84,12 +84,12 @@ public class GDELTArtifact extends CoalesceEntity {
 
     public static String getRecordSetName()
     {
-        return GDELTArtifactConstants.GDELTArtifactRecordset;
+        return GDELTArtifactConstants.ArtifactRecordset;
     }
 
     public static String getQueryName()
     {
-        return GDELTArtifactConstants.GDELTArtifactRecordset;
+        return GDELTArtifactConstants.ArtifactRecordset;
     }
 
     public GDELTArtifactRecord getRecord()
@@ -100,8 +100,8 @@ public class GDELTArtifact extends CoalesceEntity {
     public GDELTArtifactRecord getRecord(int record)
     {
         CoalesceRecordset artifactRecordSet = this.getCoalesceRecordsetForNamePath(GDELTArtifactConstants.Name,
-                                                                                   GDELTArtifactConstants.GDELTArtifactSection,
-                                                                                   GDELTArtifactConstants.GDELTArtifactRecordset);
+                                                                                   GDELTArtifactConstants.ArtifactSection,
+                                                                                   GDELTArtifactConstants.ArtifactRecordset);
         return new GDELTArtifactRecord(artifactRecordSet.getItem(record));
 
     }

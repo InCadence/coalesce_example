@@ -447,7 +447,7 @@ public class GDELT_Ingester {
 
             Filter idFilter = ff.equals(ff.property(GDELTArtifactConstants.GlobalEventID), ff.literal(currentGlobalID));
             String props[] = { "objectKey" };
-            Query query = new Query(GDELTArtifactConstants.GDELTArtifactRecordset, idFilter, 1, props, "GlobalIDQuery");
+            Query query = new Query(GDELTArtifactConstants.ArtifactRecordset, idFilter, 1, props, "GlobalIDQuery");
             Long beginTime = System.currentTimeMillis();
             CachedRowSet results = CoalesceConnection.getAuthoritativePersistor().search(query).getResults();
             LOGGER.debug("Dup query time: {}", System.currentTimeMillis() - beginTime);

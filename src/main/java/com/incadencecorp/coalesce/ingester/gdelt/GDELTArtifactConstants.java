@@ -6,8 +6,8 @@ public interface GDELTArtifactConstants {
 	static final String Version = "0.1";
 
 	static final String Title  = "GDELTArtifact";
-	static final String GDELTArtifactSection = "GDELTArtifact";
-	static final String GDELTArtifactRecordset = "GDELTArtifact";
+	static final String ArtifactSection = "GDELTArtifact";
+	static final String ArtifactRecordset = "GDELTArtifact";
 	
 	static final String Md5Sum = "Md5Sum";
 	static final String DateIngested = "DateIngested";
