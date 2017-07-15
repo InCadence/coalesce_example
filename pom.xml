@@ -14,13 +14,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.incadencecorp.coalesce</groupId>
-			<artifactId>coalesce-core</artifactId>
-			<version>0.0.25-SNAPSHOT</version>
+			<groupId>org.scala-lang.modules</groupId>
+			<artifactId>scala-parser-combinators_2.11</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.incadencecorp.coalesce</groupId>
-			<artifactId>coalesce-framework-persister-postgresql</artifactId>
+			<artifactId>coalesce-core</artifactId>
 			<version>0.0.25-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -33,6 +33,17 @@
 					<artifactId>
 						scala-parser-combinators_2.11
 					</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.incadencecorp.coalesce</groupId>
+			<artifactId>coalesce-framework-persister-neo4j</artifactId>
+			<version>0.0.25-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>scala-library</artifactId>
+					<groupId>org.scala-lang</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -55,122 +66,73 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
-<!-- 			<scope>provided</scope> -->
-		</dependency>
-				<dependency>
-			<groupId>com.incadencecorp.oe.common</groupId>
-			<artifactId>oe-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.incadencecorp.oe.entities</groupId>
-			<artifactId>oe-entities</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.incadencecorp.oe.ingest</groupId>
-			<artifactId>oe-ingest</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.incadencecorp.oe.ingest.gdelt</groupId>
-			<artifactId>oe-ingest-gdelt</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
-<!-- 			<scope>provided</scope> -->
+			<!-- <scope>provided</scope> -->
 		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-		
-		<plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-<!--           <descriptorRefs> -->
-<!--             <descriptorRef>jar-with-dependencies</descriptorRef> -->
-<!--           </descriptorRefs> -->
-          <descriptors>
-            <descriptor>src/assembly/assembly.xml</descriptor>
-          </descriptors>
-          <archive>
-            <manifest>
-              <mainClass>com.incadencecorp.coalesce.ingester.gdelt.GDELT_Ingester</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.codehaus.mojo</groupId> -->
-<!-- 				<artifactId>rpm-maven-plugin</artifactId> -->
-<!-- 				<version>2.1-alpha-2</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>rpm</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 				<configuration> -->
-<!-- 					<copyright>2016 Incadence Strategic Solutions</copyright> -->
-<!-- 					<distribution></distribution> -->
-<!-- 					<group>Coalesce</group> -->
-<!-- 					<packager>Bryan Moore</packager> -->
-<!-- 					<release>${buildNumber}</release> -->
-<!-- 					<prefix>${default.installdir}</prefix> -->
-<!-- 					<changelogFile>src/changelog</changelogFile> -->
-<!-- 					<defaultDirmode>0750</defaultDirmode> -->
-<!-- 					<defaultFilemode>0640</defaultFilemode> -->
-<!-- 					<defaultUsername>cloud</defaultUsername> -->
-<!-- 					<defaultGroupname>cloud</defaultGroupname> -->
-<!-- 					<mappings> -->
-<!-- 						<mapping> -->
-<!-- 							<directory>${default.installdir}/lib</directory> -->
-<!-- 							<artifact></artifact> -->
-<!-- 							<dependency></dependency> -->
-<!-- 						</mapping> -->
-<!-- 						<mapping> -->
-<!-- 							<directory>${default.installdir}/conf</directory> -->
-<!-- 							<sources> -->
-<!-- 								<source> -->
-<!-- 									<location>resources/conf</location> -->
-<!-- 								</source> -->
-<!-- 							</sources> -->
-<!-- 						</mapping> -->
-<!-- 						<mapping> -->
-<!-- 							<directory>${default.installdir}/bin</directory> -->
-<!-- 							<filemode>750</filemode> -->
-<!-- 							<sources> -->
-<!-- 								<source> -->
-<!-- 									<location>resources/bin</location> -->
-<!-- 								</source> -->
-<!-- 							</sources> -->
-<!-- 						</mapping> -->
-<!-- 						<mapping> -->
-<!-- 							<directory>${default.installdir}/data</directory> -->
-<!-- 							<sources> -->
-<!-- 								<source> -->
-<!-- 									<location>resources/data</location> -->
-<!-- 								</source> -->
-<!-- 							</sources> -->
-<!-- 						</mapping> -->
-<!-- 					</mappings> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<minimizeJar>false</minimizeJar>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+					<transformers>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+							<resource>META-INF/javax.media.jai.registryFile.jai</resource>
+						</transformer>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+							<resource>META-INF/registryFile.jai</resource>
+						</transformer>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+							<resource>META-INF/registryFile.jaiext</resource>
+						</transformer>
+						<transformer
+							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+							<manifestEntries>
+								<Specification-Title>Java Advanced Imaging Image I/O Tools</Specification-Title>
+								<Specification-Version>1.1</Specification-Version>
+								<Specification-Vendor>Sun Microsystems, Inc.</Specification-Vendor>
+								<Implementation-Title>com.sun.media.imageio</Implementation-Title>
+								<Implementation-Version>1.1</Implementation-Version>
+								<Implementation-Vendor>Sun Microsystems, Inc.</Implementation-Vendor>
+
+							</manifestEntries>
+						</transformer>
+					</transformers>
+
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
