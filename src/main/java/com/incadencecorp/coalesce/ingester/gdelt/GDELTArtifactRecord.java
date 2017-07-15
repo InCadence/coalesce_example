@@ -26,7 +26,7 @@ import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
  *
  */
 public class GDELTArtifactRecord extends CoalesceRecord {
-	private final static Logger LOGGER = LoggerFactory.getLogger(GDELTEventRecord.class);	
+	private final static Logger LOGGER = LoggerFactory.getLogger(GDELTArtifactRecord.class);	
 	
 	public GDELTArtifactRecord() {
 

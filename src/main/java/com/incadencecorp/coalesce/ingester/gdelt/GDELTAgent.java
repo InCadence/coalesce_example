@@ -16,70 +16,90 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
 public class GDELTAgent extends CoalesceEntity {
 
-	
-    public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
-	{
-		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTAgentConstants.Name, GDELTAgentConstants.Source,
-				GDELTAgentConstants.Version);
-		// Entity not registered, create template and register it.
-		if (template == null) {
+    public static void registerEntity(CoalesceFramework framework)
+            throws CoalescePersistorException, SAXException, IOException
+    {
+        CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTAgentConstants.Name,
+                                                                              GDELTAgentConstants.Source,
+                                                                              GDELTAgentConstants.Version);
+        // Entity not registered, create template and register it.
+        if (template == null)
+        {
             GDELTAgent entity = new GDELTAgent();
-            if (!entity.isInitialized())
-            	entity.initialize();
-            
+            if (!entity.isInitialized()) entity.initialize();
+
             framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
-		}
+        }
         CoalesceObjectFactory.register(GDELTAgent.class);
-	}
+    }
+
     public GDELTAgent()
     {
-    	initialize();
+        initialize();
     }
-    
+
     @Override
-    public boolean initialize() {
-    	if(!initializeEntity(GDELTAgentConstants.Name, GDELTAgentConstants.Source,
-				GDELTAgentConstants.Version, "", "", GDELTAgentConstants.Title)) {
-    		return false;
-    	}
-    	
-    	return initializeReferences();
+    public boolean initialize()
+    {
+        if (!initializeEntity(GDELTAgentConstants.Name,
+                              GDELTAgentConstants.Source,
+                              GDELTAgentConstants.Version,
+                              "",
+                              "",
+                              GDELTAgentConstants.Title))
+        {
+            return false;
+        }
+
+        return initializeReferences();
     }
-    
+
     @Override
-    public boolean initializeEntity(String name, String source, String version, String entityId, String entityIdType, String title) {
-    	if(!super.initializeEntity(name, source, version, entityId, entityIdType, title)) {
-			return false;
-		}
+    public boolean initializeEntity(String name,
+                                    String source,
+                                    String version,
+                                    String entityId,
+                                    String entityIdType,
+                                    String title)
+    {
+        if (!super.initializeEntity(name, source, version, entityId, entityIdType, title))
+        {
+            return false;
+        }
         setAttribute("classname", GDELTAgent.class.getName());
 
         CoalesceLinkageSection.create(this);
 
         CoalesceSection agentSection = CoalesceSection.create(this, GDELTAgentConstants.AgentSection);
-        CoalesceRecordset agentRecordSet = GDELTAgentRecord.createRecordset(agentSection, GDELTAgentConstants.AgentRecordset);
+        CoalesceRecordset agentRecordSet = GDELTAgentRecord.createRecordset(agentSection,
+                                                                            GDELTAgentConstants.AgentRecordset);
 
         agentRecordSet.addNew();
-    	
-    	return true;
+
+        return true;
     }
-    
-	public  static String getRecordSetName() {
-		return GDELTAgentConstants.AgentRecordset;
-	}
 
-	public static  String getQueryName() {
-		return GDELTAgentConstants.AgentRecordset;
-	}
-	
+    public static String getRecordSetName()
+    {
+        return GDELTAgentConstants.AgentRecordset;
+    }
 
-    public GDELTAgentRecord getRecord() {
+    public static String getQueryName()
+    {
+        return GDELTAgentConstants.AgentRecordset;
+    }
+
+    public GDELTAgentRecord getRecord()
+    {
         return getRecord(0);
     }
-    
-    public GDELTAgentRecord getRecord(int record) {
-        CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTAgentConstants.Name + File.separator
-                + GDELTAgentConstants.AgentSection + File.separator + GDELTAgentConstants.AgentRecordset);
-        return  (GDELTAgentRecord) agentRecordSet.getItem(record);
-        
+
+    public GDELTAgentRecord getRecord(int record)
+    {
+        CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTAgentConstants.Name,
+                                                                                GDELTAgentConstants.AgentSection,
+                                                                                GDELTAgentConstants.AgentRecordset);
+        return (GDELTAgentRecord) agentRecordSet.getItem(record);
+
     }
 }

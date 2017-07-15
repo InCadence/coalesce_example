@@ -15,72 +15,92 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
+public class GDELTEvent extends CoalesceEntity {
 
-public class GDELTEvent extends CoalesceEntity  {
-	
-	public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
+    public static void registerEntity(CoalesceFramework framework)
+            throws CoalescePersistorException, SAXException, IOException
     {
-		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTEventConstants.Name, GDELTEventConstants.Source,
-				GDELTEventConstants.Version);
-		// Entity not registered, create template and register it.
-		if (template == null) {
+        CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTEventConstants.Name,
+                                                                              GDELTEventConstants.Source,
+                                                                              GDELTEventConstants.Version);
+        // Entity not registered, create template and register it.
+        if (template == null)
+        {
             GDELTEvent entity = new GDELTEvent();
-            if (!entity.isInitialized())
-            	entity.initialize();
+            if (!entity.isInitialized()) entity.initialize();
             framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(entity));
-		}
+        }
         CoalesceObjectFactory.register(GDELTEvent.class);
-	}	
-    
-	public GDELTEvent() {
-
-	}
-	
-	@Override
-	public boolean initialize() {
-		if(!initializeEntity(GDELTEventConstants.Name, GDELTEventConstants.Source,
-				GDELTEventConstants.Version, "", "", GDELTEventConstants.Title)) {
-			return false;
-		}
-		
-		return initializeReferences();
-	}
-    
-    @Override
-    public boolean initializeEntity(String name, String source, String version, String entityId, String entityIdType, String title) {
-    	if(!super.initializeEntity(name, source, version, entityId, entityIdType, title)) {
-			return false;
-		}
-        setAttribute("classname", GDELTEvent.class.getName());
-	
-		CoalesceLinkageSection.create(this);
-		
-		CoalesceSection eventSection = CoalesceSection.create(this, GDELTEventConstants.EventSection);
-		CoalesceRecordset eventRecordSet = GDELTEventRecord.createRecordSet(eventSection, GDELTEventConstants.EventRecordset);
-
-		eventRecordSet.addNew();
-    	
-    	return true;
     }
-	
-	public  static String getRecordSetName() {
-		return GDELTEventConstants.EventRecordset;
-	}
 
-	public static  String getQueryName() {
-		return GDELTEventConstants.EventRecordset;
-	}
-	
-	public GDELTEventRecord getRecord() {
-		return getRecord(0);
-	}
-	
-	public GDELTEventRecord getRecord(int record) {
-	    CoalesceRecordset eventRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEventConstants.Name + File.separator
-	            + GDELTEventConstants.EventSection + File.separator + GDELTEventConstants.EventRecordset);
-	    return  (GDELTEventRecord) eventRecordSet.getItem(record);
-	    
-	}
- 
+    public GDELTEvent()
+    {
+
+    }
+
+    @Override
+    public boolean initialize()
+    {
+        if (!initializeEntity(GDELTEventConstants.Name,
+                              GDELTEventConstants.Source,
+                              GDELTEventConstants.Version,
+                              "",
+                              "",
+                              GDELTEventConstants.Title))
+        {
+            return false;
+        }
+
+        return initializeReferences();
+    }
+
+    @Override
+    public boolean initializeEntity(String name,
+                                    String source,
+                                    String version,
+                                    String entityId,
+                                    String entityIdType,
+                                    String title)
+    {
+        if (!super.initializeEntity(name, source, version, entityId, entityIdType, title))
+        {
+            return false;
+        }
+        setAttribute("classname", GDELTEvent.class.getName());
+
+        CoalesceLinkageSection.create(this);
+
+        CoalesceSection eventSection = CoalesceSection.create(this, GDELTEventConstants.EventSection);
+        CoalesceRecordset eventRecordSet = GDELTEventRecord.createRecordSet(eventSection,
+                                                                            GDELTEventConstants.EventRecordset);
+
+        eventRecordSet.addNew();
+
+        return true;
+    }
+
+    public static String getRecordSetName()
+    {
+        return GDELTEventConstants.EventRecordset;
+    }
+
+    public static String getQueryName()
+    {
+        return GDELTEventConstants.EventRecordset;
+    }
+
+    public GDELTEventRecord getRecord()
+    {
+        return getRecord(0);
+    }
+
+    public GDELTEventRecord getRecord(int record)
+    {
+        CoalesceRecordset eventRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEventConstants.Name,
+                                                                                GDELTEventConstants.EventSection,
+                                                                                GDELTEventConstants.EventRecordset);
+        return (GDELTEventRecord) eventRecordSet.getItem(record);
+
+    }
 
 }
