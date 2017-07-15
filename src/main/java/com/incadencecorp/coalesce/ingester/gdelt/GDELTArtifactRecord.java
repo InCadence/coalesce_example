@@ -70,7 +70,7 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 		}	
 	}
 
-	public void setDateAdded(int dateAdded) {
+	public void setArtifactDate(int dateAdded) {
 		((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).setValue(dateAdded);
 	}
 	
