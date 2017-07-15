@@ -61,6 +61,19 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 		((CoalesceStringField) this.getFieldByName(GDELTArtifactConstants.RawText)).setValue(rawText);
 	}
 	
+	public int getArtifactDate() {
+		try {
+			return ((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).getValue();
+		} catch (CoalesceDataFormatException e) {
+			LOGGER.error(e.getMessage(),e);
+			return 0;
+		}	
+	}
+
+	public void setDateAdded(int dateAdded) {
+		((CoalesceIntegerField) this.getFieldByName(GDELTArtifactConstants.ArtifactDate)).setValue(dateAdded);
+	}
+	
 	public static CoalesceRecordset createRecordSet(CoalesceSection section, String pathName) {
 		CoalesceRecordset gdeltArtifactRecordset = CoalesceRecordset.create(section, pathName);
 		
