@@ -18,7 +18,7 @@ import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 
 import org.apache.commons.codec.language.DoubleMetaphone;
-import org.apache.commons.lang.StringEscapeUtils;
+//import org.apache.commons.codec.language.DoubleMetaphone;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
@@ -32,12 +32,9 @@ import org.xml.sax.SAXException;
 import com.incadencecorp.coalesce.common.exceptions.CoalesceDataFormatException;
 import com.incadencecorp.coalesce.common.exceptions.CoalesceException;
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
+import com.incadencecorp.coalesce.common.helpers.EntityLinkHelper;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceDateTimeField;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
-import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.ELinkTypes;
 import com.incadencecorp.coalesce.framework.persistance.accumulo.AccumuloPersistor;
 import com.incadencecorp.coalesce.ingester.gdelt.GDELTFields.Fields;
@@ -45,19 +42,21 @@ import com.vividsolutions.jts.geom.Coordinate;
 
 public class GDELT_Ingester {
 
-    public GDELT_Ingester() throws CoalescePersistorException
+    private final static Logger LOGGER = LoggerFactory.getLogger(GDELT_Ingester.class);
+    private String currentGlobalID;
+    private CoalesceConnection CoalesceConnection;
+    private DoubleMetaphone dmp;
+
+    public GDELT_Ingester() throws CoalescePersistorException, SAXException, IOException
     {
         dmp = new DoubleMetaphone();
         currentGlobalID = "0";
         CoalesceConnection = new CoalesceConnection();
+        // Register the entities we will use
+        GDELTArtifact.registerEntity(CoalesceConnection.getFramework());
+        GDELTEvent.registerEntity(CoalesceConnection.getFramework());
+        GDELTAgent.registerEntity(CoalesceConnection.getFramework());
     }
-
-    private String source = "GDELT";
-    private final static Logger LOGGER = LoggerFactory.getLogger(GDELT_Ingester.class);
-    private boolean firstEntity = true;
-    private String currentGlobalID;
-    private DoubleMetaphone dmp;
-    private CoalesceConnection CoalesceConnection;
 
     public List<CoalesceEntity> loadRecordsFromFile(File file) throws IOException, CoalescePersistorException, SQLException
     {
@@ -75,41 +74,6 @@ public class GDELT_Ingester {
 
     public int persistRecordsFromFile(File file) throws IOException, SAXException, CoalescePersistorException, SQLException
     {
-        if (firstEntity)
-        {
-            CoalesceObjectFactory.register(GDELTArtifact.class);
-            CoalesceObjectFactory.register(GDELTEntity.class);
-            CoalesceObjectFactory.register(GDELTAgent.class);
-            // TODO Figure out how to do the template registration better -
-            // maybe by standard we should do it in
-            // TODO the entity class
-            GDELTArtifact artifact = new GDELTArtifact();
-            artifact.setSource(source);
-
-            CoalesceRecordset gdelt_artifactRecordSet = artifact.getCoalesceRecordsetForNamePath("GDELTEntity/GDELTArtifactSection/GDELTArtifactRecordset");
-            CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.getItem(0);
-            String recname = gdelt_artifactRecord.getName();
-            // gdelt_artifactRecord.setName("GDELTArtifact");
-
-            CoalesceEntityTemplate arttemplate = CoalesceEntityTemplate.create(artifact);
-            // framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(artifact));
-            GDELTAgent agent1 = new GDELTAgent();
-            agent1.setSource(source);
-            CoalesceRecordset agent1RecordSet = agent1.getCoalesceRecordsetForNamePath("GDELTEntity/AgentSection/AgentRecordset");
-            CoalesceRecord agentRecord = agent1RecordSet.getItem(0);
-            String arecname = agentRecord.getName();
-            CoalesceEntityTemplate agenttemplate = CoalesceEntityTemplate.create(agent1);
-            // framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(agent1));
-            GDELTEvent event = new GDELTEvent();
-            event.setSource(source);
-            CoalesceRecordset eventRecordSet = event.getCoalesceRecordsetForNamePath("GDELTEntity/EventSection/EventRecordset");
-            CoalesceRecord eventRecord = eventRecordSet.getItem(0);
-            CoalesceEntityTemplate eventtemplate = CoalesceEntityTemplate.create(event);
-            // framework.saveCoalesceEntityTemplate(CoalesceEntityTemplate.create(event));
-            CoalesceConnection.getFramework().saveCoalesceEntityTemplate(arttemplate, eventtemplate, agenttemplate);
-            CoalesceConnection.getFramework().registerTemplates(arttemplate, eventtemplate, agenttemplate);
-            firstEntity = false;
-        }
 
         int count = 0;
         List<CoalesceEntity> entities = new ArrayList<>();
@@ -137,7 +101,7 @@ public class GDELT_Ingester {
                         entities.clear();
                         long endTime = System.currentTimeMillis();
                         long processTime = beginTime2 - beginTime;
-                        long persistTime = endTime - beginTime2;
+                        //long persistTime = endTime - beginTime2;
                         long totalTime = endTime - beginTime;
                         double persistRate = (double) count / (double) totalTime * 1000d;
 
@@ -185,11 +149,7 @@ public class GDELT_Ingester {
             artifact.initialize();
         }
         GDELTArtifactRecord artifactRecord = artifact.getRecord();
-        artifact.setSource(source);
-        CoalesceRecordset gdelt_artifactRecordSet = artifact.getCoalesceRecordsetForNamePath(GDELTEntityConstants.GDELTEntity
-                + File.separator + GDELTArtifactConstants.GDELTArtifactSection + File.separator
-                + GDELTArtifactConstants.GDELTArtifactRecordset);
-        CoalesceRecord gdelt_artifactRecord = gdelt_artifactRecordSet.getItem(0);
+
 
         // Populate the Artifact with the raw data and metadata
         artifactRecord.setSourceFileName(sourceFile);
@@ -245,8 +205,7 @@ public class GDELT_Ingester {
 
         CachedRowSet results = CoalesceConnection.getAuthoritativePersistor().search(query).getResults();
         LOGGER.debug("Agent query time: {}", System.currentTimeMillis() - beginTime);
-        // LOGGER.debug("Searching for {} / {} / {} / {}",
-        // name,code,countrycode,fullname);
+
         if (results.next())
         {
             LOGGER.info("Collapesed Agent");
@@ -334,6 +293,7 @@ public class GDELT_Ingester {
             agentRecord.setAgentType3Code(fields[Fields.Agent1Type3Code.value]);
             agentRecord.setAgentGeoType(fields[Fields.Agent1Geo_Type.value]);
             agentRecord.setAgentGeoFullname(fields[Fields.Agent1Geo_Fullname.value]);
+            agentRecord.setNameMetaphone(dmp.doubleMetaphone(fields[Fields.Agent1Geo_Fullname.value]));
             agentRecord.setAgentGeoCountryCode(fields[Fields.Agent1Geo_CountryCode.value]);
             agentRecord.setAgentGeoADM1Code(fields[Fields.Agent1Geo_ADM1Code.value]);
             agentRecord.setAgentGeoADM2Code(fields[Fields.Agent1Geo_ADM2Code.value]);
@@ -367,6 +327,7 @@ public class GDELT_Ingester {
             agentRecord.setAgentType3Code(fields[Fields.Agent2Type3Code.value]);
             agentRecord.setAgentGeoType(fields[Fields.Agent2Geo_Type.value]);
             agentRecord.setAgentGeoFullname(fields[Fields.Agent2Geo_Fullname.value]);
+            agentRecord.setNameMetaphone(dmp.doubleMetaphone(fields[Fields.Agent1Geo_Fullname.value]));
             agentRecord.setAgentGeoCountryCode(fields[Fields.Agent2Geo_CountryCode.value]);
             agentRecord.setAgentGeoADM1Code(fields[Fields.Agent2Geo_ADM1Code.value]);
             agentRecord.setAgentGeoADM2Code(fields[Fields.Agent2Geo_ADM2Code.value]);
@@ -506,22 +467,20 @@ public class GDELT_Ingester {
             }
             catch (CoalescePersistorException | SQLException | CoalesceDataFormatException e)
             {
-                // TODO Auto-generated catch block
                 LOGGER.error(e.getMessage(), e);
-                ;
 
             }
             try
             {
                 // Linkage Section
 
-                GDELTLinkHelper.linkEntitiesUniDirectional(artifact,
+                EntityLinkHelper.linkEntitiesUniDirectional(artifact,
                                                            ELinkTypes.HAS_PRODUCT,
                                                            event,
                                                            ELinkTypes.HAS_PRODUCT.getLabel(),
                                                            false);
 
-                GDELTLinkHelper.linkEntitiesUniDirectional(event,
+                EntityLinkHelper.linkEntitiesUniDirectional(event,
                                                            ELinkTypes.IS_PRODUCT_OF,
                                                            artifact,
                                                            ELinkTypes.IS_PRODUCT_OF.getLabel(),
@@ -529,23 +488,23 @@ public class GDELT_Ingester {
 
                 if (agent1 != null)
                 {
-                    GDELTLinkHelper.linkEntitiesUniDirectional(artifact,
+                	EntityLinkHelper.linkEntitiesUniDirectional(artifact,
                                                                ELinkTypes.HAS_PRODUCT,
                                                                agent1,
                                                                ELinkTypes.HAS_PRODUCT.getLabel(),
                                                                false);
-                    GDELTLinkHelper.linkEntitiesUniDirectional(event,
+                	EntityLinkHelper.linkEntitiesUniDirectional(event,
                                                                ELinkTypes.HAS_PARTICIPANT,
                                                                agent1,
                                                                ELinkTypes.HAS_PARTICIPANT.getLabel(),
                                                                false);
 
-                    GDELTLinkHelper.linkEntitiesUniDirectional(agent1,
+                	EntityLinkHelper.linkEntitiesUniDirectional(agent1,
                                                                ELinkTypes.IS_A_PARTICIPANT_OF,
                                                                event,
                                                                ELinkTypes.IS_A_PARTICIPANT_OF.getLabel(),
                                                                false);
-                    GDELTLinkHelper.linkEntitiesUniDirectional(agent1,
+                	EntityLinkHelper.linkEntitiesUniDirectional(agent1,
                                                                ELinkTypes.IS_PRODUCT_OF,
                                                                artifact,
                                                                ELinkTypes.IS_PRODUCT_OF.getLabel(),
@@ -555,24 +514,24 @@ public class GDELT_Ingester {
                 }
                 if (agent2 != null)
                 {
-                    GDELTLinkHelper.linkEntitiesUniDirectional(event,
+                	EntityLinkHelper.linkEntitiesUniDirectional(event,
                                                                ELinkTypes.HAS_PARTICIPANT,
                                                                agent2,
                                                                ELinkTypes.HAS_PARTICIPANT.getLabel(),
                                                                false);
-                    GDELTLinkHelper.linkEntitiesUniDirectional(agent2,
+                	EntityLinkHelper.linkEntitiesUniDirectional(agent2,
                                                                ELinkTypes.IS_A_PARTICIPANT_OF,
                                                                event,
                                                                ELinkTypes.IS_A_PARTICIPANT_OF.getLabel(),
                                                                false);
 
-                    GDELTLinkHelper.linkEntitiesUniDirectional(artifact,
+                	EntityLinkHelper.linkEntitiesUniDirectional(artifact,
                                                                ELinkTypes.HAS_PRODUCT,
                                                                agent2,
 
                                                                ELinkTypes.HAS_PRODUCT.getLabel(),
                                                                false);
-                    GDELTLinkHelper.linkEntitiesUniDirectional(agent2,
+                	EntityLinkHelper.linkEntitiesUniDirectional(agent2,
                                                                ELinkTypes.IS_PRODUCT_OF,
                                                                artifact,
                                                                ELinkTypes.IS_PRODUCT_OF.getLabel(),

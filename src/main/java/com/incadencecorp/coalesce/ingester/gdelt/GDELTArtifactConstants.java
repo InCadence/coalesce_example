@@ -5,10 +5,10 @@ public interface GDELTArtifactConstants {
 	static final String Source = "G2Core";
 	static final String Version = "0.1";
 
-	static final String Title  = "G2CoreEvent";
+	static final String Title  = "GDELTArtifact";
 
-	static final String ArtifactSection = "ArtifactSection";
-	static final String ArtifactRecordset = "ArtifactRecordset";
+	static final String ArtifactSection = "Artifact";
+	static final String ArtifactRecordset = "Artifact";
 	
 	static final String Md5Sum = "Md5Sum";
 	static final String DateIngested = "DateIngested";

@@ -255,28 +255,18 @@ public class GDELTRecord extends CoalesceRecord {
     {
         recordSet = CoalesceRecordset.create(section, pathName);
 
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.DataSource, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTEntityConstants.OntologyReference,
-                                       ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.IsSimulation, ECoalesceFieldDataTypes.BOOLEAN_TYPE);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTEntityConstants.PMESIIPTPolitical,
-                                       ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.PMESIIPTMilitary, ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.PMESIIPTEconomic, ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.PMESIIPTSocial, ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTEntityConstants.PMESIIPTInformation,
-                                       ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTEntityConstants.PMESIIPTInfrastructure,
-                                       ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTEntityConstants.PMESIIPTPhysicalEnvironment,
-                                       ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.PMESIIPTTime, ECoalesceFieldDataTypes.FLOAT_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEntityConstants.Tags, ECoalesceFieldDataTypes.STRING_LIST_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DataSource, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.OntologyReference, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.IsSimulation, ECoalesceFieldDataTypes.BOOLEAN_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTPolitical, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTMilitary, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTEconomic, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTSocial, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTInformation, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTInfrastructure, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTPhysicalEnvironment, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.PMESIIPTTime, ECoalesceFieldDataTypes.FLOAT_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.Tags, ECoalesceFieldDataTypes.STRING_LIST_TYPE);
 
         // event record setup
         CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.GlobalEventID, ECoalesceFieldDataTypes.INTEGER_TYPE);

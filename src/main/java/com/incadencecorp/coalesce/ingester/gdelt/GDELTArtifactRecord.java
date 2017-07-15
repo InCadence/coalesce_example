@@ -97,8 +97,8 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 		((CoalesceDateTimeField) this.getFieldByName(GDELTArtifactConstants.DateIngested)).setValue(dateAdded);
 	}
 	
-	public static CoalesceRecordset createRecordSet(CoalesceSection section, String pathName) {
-		CoalesceRecordset gdeltArtifactRecordset = CoalesceRecordset.create(section, pathName);
+	public static CoalesceRecordset createRecordset(CoalesceSection artifactSection, String artifactrecordset) {
+		CoalesceRecordset gdeltArtifactRecordset = CoalesceRecordset.create(artifactSection, artifactrecordset);
 		
 		
 		CoalesceFieldDefinition.create(gdeltArtifactRecordset, GDELTArtifactConstants.Md5Sum, ECoalesceFieldDataTypes.STRING_TYPE);
@@ -110,6 +110,7 @@ public class GDELTArtifactRecord extends CoalesceRecord {
 		CoalesceFieldDefinition.create(gdeltArtifactRecordset, GDELTArtifactConstants.RawText, ECoalesceFieldDataTypes.STRING_TYPE);
 		
 		return gdeltArtifactRecordset;
+
 	}
 
 }

@@ -2,12 +2,12 @@ package com.incadencecorp.coalesce.ingester.gdelt;
 
 public interface GDELTAgentConstants {
 
-	static final String GDELTAgentName = "GDELTAgent";
-	static final String Source = "";
-	static final String Version = "0.2";
-	static final String Title = "G2CoreAgent";
-	static final String AgentSection = "AgentSection";
-	static final String AgentRecordset = "AgentRecordset";
+	static final String Name = "GDELTAgent";
+	static final String Source = "G2Core";
+	static final String Version = "0.1";
+	static final String Title = "GDELTAgent";
+	static final String AgentSection = "Agent";
+	static final String AgentRecordset = "Agent";
 
 	static final String AgentCode = "AgentCode";
 	static final String AgentName = "AgentName";

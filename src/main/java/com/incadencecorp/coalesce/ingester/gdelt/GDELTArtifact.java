@@ -8,14 +8,16 @@ import org.xml.sax.SAXException;
 import com.incadencecorp.coalesce.common.exceptions.CoalescePersistorException;
 import com.incadencecorp.coalesce.framework.CoalesceFramework;
 import com.incadencecorp.coalesce.framework.CoalesceObjectFactory;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntity;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceEntityTemplate;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceFieldDefinition;
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceLinkageSection;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecord;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceRecordset;
 import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
 
-public class GDELTArtifact extends GenericArtifact {
+public class GDELTArtifact extends CoalesceEntity {
 	
 	public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
 	{
@@ -31,17 +33,34 @@ public class GDELTArtifact extends GenericArtifact {
 	public GDELTArtifact() {
 		
 		initialize();
-		setName(GDELTArtifactConstants.Name);
-		setSource(GDELTArtifactConstants.Source);
-		setVersion(GDELTArtifactConstants.Version);
-		setTitle(GDELTArtifactConstants.Title);
-        setAttribute("classname", GDELTArtifact.class.getName());
-        
-		CoalesceSection gdeltArtifactSection = CoalesceSection.create(this, GDELTArtifactConstants.GDELTArtifactSection);
-		CoalesceRecordset gdeltArtifactRecordset = GDELTArtifactRecord.createRecordSet(gdeltArtifactSection, GDELTArtifactConstants.GDELTArtifactRecordset);
-		gdeltArtifactRecordset.addNew();
-
+		
 	}
+    @Override
+    public boolean initialize() {
+    	if(!initializeEntity(GDELTArtifactConstants.Name, GDELTArtifactConstants.Source,
+    			GDELTArtifactConstants.Version, "", "", GDELTAgentConstants.Title)) {
+    		return false;
+    	}
+    	
+    	return initializeReferences();
+    }
+    
+    @Override
+    public boolean initializeEntity(String name, String source, String version, String entityId, String entityIdType, String title) {
+    	if(!super.initializeEntity(name, source, version, entityId, entityIdType, title)) {
+			return false;
+		}
+        setAttribute("classname", GDELTAgent.class.getName());
+
+        CoalesceLinkageSection.create(this);
+
+        CoalesceSection agentSection = CoalesceSection.create(this, GDELTArtifactConstants.ArtifactSection);
+        CoalesceRecordset agentRecordSet = GDELTArtifactRecord.createRecordset(agentSection, GDELTArtifactConstants.ArtifactRecordset);
+
+        agentRecordSet.addNew();
+    	
+    	return true;
+    }
 	public  static String getRecordSetName() {
 		return GDELTArtifactConstants.ArtifactRecordset;
 	}
@@ -54,7 +73,7 @@ public class GDELTArtifact extends GenericArtifact {
 	}
 	
 	public GDELTArtifactRecord getRecord(int record) {
-	    CoalesceRecordset artifactRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEntityConstants.GDELTEntity + File.separator
+	    CoalesceRecordset artifactRecordSet = this.getCoalesceRecordsetForNamePath(GDELTArtifactConstants.Name + File.separator
 	            + GDELTArtifactConstants.ArtifactSection + File.separator + GDELTEventConstants.EventRecordset);
 	    return  (GDELTArtifactRecord) artifactRecordSet.getItem(record);
 	    

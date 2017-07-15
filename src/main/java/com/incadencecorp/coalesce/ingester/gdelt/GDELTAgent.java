@@ -16,14 +16,10 @@ import com.incadencecorp.coalesce.framework.datamodel.CoalesceSection;
 
 public class GDELTAgent extends CoalesceEntity {
 
-    private static String NAME = GDELTAgentConstants.GDELTAgentName;
-    private static String TITLE = GDELTAgentConstants.Title;
-    private static String SOURCE = GDELTEntityConstants.Source;
-    private static String VERSION = GDELTEntityConstants.Version;
 	
     public static void registerEntity(CoalesceFramework framework) throws CoalescePersistorException, SAXException, IOException
 	{
-		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(NAME, GDELTAgentConstants.Source,
+		CoalesceEntityTemplate template = framework.getCoalesceEntityTemplate(GDELTAgentConstants.Name, GDELTAgentConstants.Source,
 				GDELTAgentConstants.Version);
 		// Entity not registered, create template and register it.
 		if (template == null) {
@@ -42,7 +38,8 @@ public class GDELTAgent extends CoalesceEntity {
     
     @Override
     public boolean initialize() {
-    	if(!initializeEntity(NAME, SOURCE, VERSION, "", "", TITLE)) {
+    	if(!initializeEntity(GDELTAgentConstants.Name, GDELTAgentConstants.Source,
+				GDELTAgentConstants.Version, "", "", GDELTAgentConstants.Title)) {
     		return false;
     	}
     	
@@ -80,7 +77,7 @@ public class GDELTAgent extends CoalesceEntity {
     }
     
     public GDELTAgentRecord getRecord(int record) {
-        CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEntityConstants.GDELTEntity + File.separator
+        CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTAgentConstants.Name + File.separator
                 + GDELTAgentConstants.AgentSection + File.separator + GDELTAgentConstants.AgentRecordset);
         return  (GDELTAgentRecord) agentRecordSet.getItem(record);
         

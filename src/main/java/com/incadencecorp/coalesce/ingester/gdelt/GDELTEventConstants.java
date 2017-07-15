@@ -1,14 +1,30 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
+import com.incadencecorp.coalesce.framework.datamodel.CoalesceFieldDefinition;
+import com.incadencecorp.coalesce.framework.datamodel.ECoalesceFieldDataTypes;
+
 public interface GDELTEventConstants {
 	static final String Name = "GDELTEvent";
 	static final String Source = "G2Core";
 	static final String Version = "0.1";
 
-	static final String Title  = "G2CoreEvent";
+	static final String Title  = "GDELTEvent";
 	static final String EventSection = "Event";
 	static final String EventRecordset = "Event";
 	
+    static final String DataSource = "DataSource";
+    static final String OntologyReference = "OntologyReference";
+    static final String IsSimulation = "IsSimulation";
+    static final String PMESIIPTPolitical = "PMESIIPTPolitical";
+    static final String PMESIIPTMilitary = "PMESIIPTMilitary";
+    static final String PMESIIPTEconomic = "PMESIIPTEconomic";
+    static final String PMESIIPTSocial = "PMESIIPTSocial";
+    static final String PMESIIPTInformation = "PMESIIPTInformation";
+    static final String PMESIIPTInfrastructure = "PMESIIPTInfrastructure";
+    static final String PMESIIPTPhysicalEnvironment = "PMESIIPTPhysicalEnvironment";
+    static final String PMESIIPTTime = "PMESIIPTTime";
+    static final String Tags = "Tags";
+
 	static final String GlobalEventID = "GlobalEventID";
 	static final String Day = "Day";
 	static final String MonthYear = "MonthYear";
