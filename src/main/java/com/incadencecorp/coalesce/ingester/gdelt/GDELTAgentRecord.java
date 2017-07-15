@@ -345,96 +345,43 @@ public class GDELTAgentRecord extends GDELTRecord {
         }
     }
 
-    /**
-     * @return the agentGeoFeatureID
-     */
-    public Coordinate getAgentGeoFeatureID()
-    {
-        try
-        {
-            return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
-        }
-        catch (CoalesceDataFormatException e)
-        {
-            LOGGER.error(e.getMessage(), e);
-            return null;
-        }
-    }
+
 
     /**
      * @return the agentGeoFeatureID
      */
-    public String getAgentGeoFeatureIDAsString()
+    public String getAgentGeoFeatureID()
     {
-        try
-        {
-            return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue().toString();
-        }
-        catch (CoalesceDataFormatException e)
-        {
-            LOGGER.error(e.getMessage(), e);
-            return null;
-        }
+  
+           return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFeatureID)).getValue();
+ 
     }
 
     /**
      * @param agentGeoFeatureID the agentGeoFeatureID to set
      */
-    public void setAgentGeoFeatureID(String Agent2Geo_Lat, String Agent2Geo_Long)
+    public void setAgentGeoFeatureID(String agentGeoFeatureID)
     {
-        try
-        {
-            if (!Agent2Geo_Lat.isEmpty() && !Agent2Geo_Long.isEmpty())
-            {
-                // If fields are out of range set to limits
-                double lat = Float.parseFloat(Agent2Geo_Lat);
-                double lon = Float.parseFloat(Agent2Geo_Long);
+        ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFeatureID)).setValue(agentGeoFeatureID);
 
-                buildAndSetGeoField(this, GDELTAgentConstants.AgentGeo, (float) lat, (float) lon);
-            }
-            else
-            {
-                // Create a dummy record at the south pole
-                buildAndSetGeoField(this, GDELTAgentConstants.AgentGeo, (float) -90.0, (float) -180.0);
-            }
-        }
-        catch (CoalesceDataFormatException e)
-        {
-            LOGGER.error(e.getMessage(), e);
-        }
     }
 
-    /**
-     * Class that generates a geo field based on a lat and long. Takes in a prefix string and appends "Location" to it, so
-     * make sure you have a field named <prefix>Location in your record.
-     * 
-     * @param agentRecord The record that will store the geo field
-     * @param prefix The name of the field to store it in. This method will append "Location" to it before saving
-     * @param lat The Latitude geo value
-     * @param lon The Longitude geo value
-     * @throws CoalesceDataFormatException
-     * 
-     */
-    public static void buildAndSetGeoField(CoalesceRecord agentRecord, String prefix, Float lat, Float lon)
-            throws CoalesceDataFormatException
-    {
-        if ((lat != null) && (lon != null))
-        {
-            if (Math.abs(lat) > 90 || Math.abs(lon) > 180)
-            {
-                LOGGER.warn("Coordinates out of range - will normalize: LAT: {} LONG: {}", lat, lon);
-            }
-            if (lat < -90.0) lat = (float) -90.0;
-            if (lat > 90) lat = (float) 90.0;
-            if (lon < -180.0) lon = (float) -180.0;
-            if (lon > 180) lon = (float) 180.0;
-            Point point = factory.createPoint(new Coordinate(lon, lat, 0));
-            ((CoalesceCoordinateField) agentRecord.getFieldByName(prefix + "Location")).setValue(point);
-        }
-        else
-            LOGGER.error("Coordinates null: Lat: {} Lon: {}", (lat == null), (lon == null));
-    }
+	public Coordinate getGeoLocation() {
+		try {
+			return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
+		} catch (CoalesceDataFormatException e) {
+			LOGGER.error(e.getMessage(),e);
+			return null;
+		}
+	}
 
+	public void setGeoLocation(Coordinate actionGeoLocation) {
+		try {
+			((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).setValue(actionGeoLocation);
+		} catch (CoalesceDataFormatException e) {
+			LOGGER.error(e.getMessage(),e);		}
+	}
+	
     public static CoalesceRecordset createRecordset(CoalesceSection section, String pathName)
     {
         CoalesceRecordset recordSet = CoalesceRecordset.create(section, pathName);
@@ -491,4 +438,5 @@ public class GDELTAgentRecord extends GDELTRecord {
         return recordSet;
     }
 
+	
 }
