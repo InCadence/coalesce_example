@@ -50,7 +50,6 @@ public interface GDELTEventConstants {
 	static final String ActionGeoFeatureID = "ActionGeoFeatureID";
 	static final String DateAdded = "DateAdded";
 	static final String SourceURL = "SourceURL";
-	static final String DateTime = "DateTime";
 	
 	static final String ActionGeoLocation = "ActionGeoLocation";
 	static final String ActionGeo = "ActionGeo";

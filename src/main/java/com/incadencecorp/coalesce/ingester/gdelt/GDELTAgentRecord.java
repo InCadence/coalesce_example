@@ -24,6 +24,19 @@ public class GDELTAgentRecord extends GDELTRecord {
 
     private static GeometryFactory factory = new GeometryFactory();
 
+    public GDELTAgentRecord()
+    {
+
+    }
+
+    /**
+     * @param record
+     */
+    public GDELTAgentRecord(CoalesceRecord record)
+    {
+        super(record);
+    }
+
     /**
      * @return the agentCode
      */
@@ -345,16 +358,14 @@ public class GDELTAgentRecord extends GDELTRecord {
         }
     }
 
-
-
     /**
      * @return the agentGeoFeatureID
      */
     public String getAgentGeoFeatureID()
     {
-  
-           return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFeatureID)).getValue();
- 
+
+        return ((CoalesceStringField) this.getFieldByName(GDELTAgentConstants.AgentGeoFeatureID)).getValue();
+
     }
 
     /**
@@ -366,28 +377,40 @@ public class GDELTAgentRecord extends GDELTRecord {
 
     }
 
-	public Coordinate getAgentGeoLocation() {
-		try {
-			return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
-		} catch (CoalesceDataFormatException e) {
-			LOGGER.error(e.getMessage(),e);
-			return null;
-		}
-	}
+    public Coordinate getAgentGeoLocation()
+    {
+        try
+        {
+            return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
+        }
+        catch (CoalesceDataFormatException e)
+        {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
 
-	public void setAgentGeoLocation(Coordinate actionGeoLocation) {
-		try {
-			((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).setValue(actionGeoLocation);
-		} catch (CoalesceDataFormatException e) {
-			LOGGER.error(e.getMessage(),e);		}
-	}
-	
+    public void setAgentGeoLocation(Coordinate actionGeoLocation)
+    {
+        try
+        {
+            ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).setValue(actionGeoLocation);
+        }
+        catch (CoalesceDataFormatException e)
+        {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
     public static CoalesceRecordset createRecordset(CoalesceSection section, String pathName)
     {
         CoalesceRecordset recordSet = CoalesceRecordset.create(section, pathName);
         CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
         CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.NameMetaphone, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.NameMetaphone,
+                                       ECoalesceFieldDataTypes.STRING_TYPE,
+                                       true);
         CoalesceFieldDefinition.create(recordSet,
                                        GDELTAgentConstants.AgentCountryCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
@@ -396,7 +419,10 @@ public class GDELTAgentRecord extends GDELTRecord {
                                        GDELTAgentConstants.AgentKnownGroupCode,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentEthnicCode, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.AgentEthnicCode,
+                                       ECoalesceFieldDataTypes.STRING_TYPE,
+                                       true);
         CoalesceFieldDefinition.create(recordSet,
                                        GDELTAgentConstants.AgentReligion1Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
@@ -405,11 +431,23 @@ public class GDELTAgentRecord extends GDELTRecord {
                                        GDELTAgentConstants.AgentReligion2Code,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
                                        true);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType1Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType2Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentType3Code, ECoalesceFieldDataTypes.STRING_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.AgentType1Code,
+                                       ECoalesceFieldDataTypes.STRING_TYPE,
+                                       true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.AgentType2Code,
+                                       ECoalesceFieldDataTypes.STRING_TYPE,
+                                       true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.AgentType3Code,
+                                       ECoalesceFieldDataTypes.STRING_TYPE,
+                                       true);
 
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentGeoType, ECoalesceFieldDataTypes.INTEGER_TYPE, true);
+        CoalesceFieldDefinition.create(recordSet,
+                                       GDELTAgentConstants.AgentGeoType,
+                                       ECoalesceFieldDataTypes.INTEGER_TYPE,
+                                       true);
         CoalesceFieldDefinition.create(recordSet,
                                        GDELTAgentConstants.AgentGeoFullname,
                                        ECoalesceFieldDataTypes.STRING_TYPE,
@@ -438,5 +476,4 @@ public class GDELTAgentRecord extends GDELTRecord {
         return recordSet;
     }
 
-	
 }

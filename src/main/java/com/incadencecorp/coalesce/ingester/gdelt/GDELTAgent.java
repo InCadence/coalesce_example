@@ -99,7 +99,7 @@ public class GDELTAgent extends CoalesceEntity {
         CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTAgentConstants.Name,
                                                                                 GDELTAgentConstants.AgentSection,
                                                                                 GDELTAgentConstants.AgentRecordset);
-        return (GDELTAgentRecord) agentRecordSet.getItem(record);
+        return new GDELTAgentRecord( agentRecordSet.getItem(record));
 
     }
 }

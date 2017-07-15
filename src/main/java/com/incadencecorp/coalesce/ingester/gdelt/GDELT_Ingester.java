@@ -305,12 +305,13 @@ public class GDELT_Ingester {
                 double lat = Float.parseFloat(fields[Fields.Agent1Geo_Lat.value]);
                 double lon = Float.parseFloat(fields[Fields.Agent1Geo_Long.value]);
 
-                agentRecord.setAgentGeoLocation(new Coordinate((float) lat, (float) lon));
+                // lon is x lat is y
+                agentRecord.setAgentGeoLocation(new Coordinate((float) lon, (float) lat));
             }
             else
             {
                 // Create a dummy record at the south pole
-                agentRecord.setAgentGeoLocation(new Coordinate((float) -90.0, (float) -180.0));
+                agentRecord.setAgentGeoLocation(new Coordinate((float) -180.0, (float) -90.0));
             }
         }
         else
@@ -339,12 +340,13 @@ public class GDELT_Ingester {
                 double lat = Float.parseFloat(fields[Fields.Agent2Geo_Lat.value]);
                 double lon = Float.parseFloat(fields[Fields.Agent2Geo_Long.value]);
 
-                agentRecord.setAgentGeoLocation(new Coordinate((float) lat, (float) lon));
+                // lon is x lat is y
+                agentRecord.setAgentGeoLocation(new Coordinate((float) lon, (float) lat));
             }
             else
             {
                 // Create a dummy record at the south pole
-                agentRecord.setAgentGeoLocation(new Coordinate((float) -90.0, (float) -180.0));
+                agentRecord.setAgentGeoLocation(new Coordinate((float) -180.0, (float) -90.0));
             }
         }
         if ((agent != null) && (agentRecord != null))
@@ -399,9 +401,8 @@ public class GDELT_Ingester {
         eventRecord.setActionGeoADM1Code(fields[Fields.ActionGeo_ADM1Code.value]);
         eventRecord.setActionGeoADM2Code(fields[Fields.ActionGeo_ADM2Code.value]);
         eventRecord.setActionGeoFeatureID(fields[Fields.ActionGeo_FeatureID.value]);
-        eventRecord.setDateAdded(Integer.parseInt(fields[Fields.DATEADDED.value]));
+        eventRecord.setDateAdded(dt);
         eventRecord.setSourceURL(fields[Fields.SOURCEURL.value]);
-        eventRecord.setDateTime(dt);
 
         if (!fields[Fields.ActionGeo_Lat.value].isEmpty() && !fields[Fields.ActionGeo_Long.value].isEmpty())
         {
@@ -409,12 +410,13 @@ public class GDELT_Ingester {
             double lat = Float.parseFloat(fields[Fields.ActionGeo_Lat.value]);
             double lon = Float.parseFloat(fields[Fields.ActionGeo_Long.value]);
 
-            eventRecord.setActionGeoLocation(new Coordinate((float) lat, (float) lon));
+            // lon is x lat is y
+            eventRecord.setActionGeoLocation(new Coordinate((float) lon, (float) lat));
         }
         else
         {
             LOGGER.debug("Empty Lat/Long for Event");
-            eventRecord.setActionGeoLocation(new Coordinate((float) -90.0, (float) -180.0));
+            eventRecord.setActionGeoLocation(new Coordinate((float) -180.0, (float) -90.0));
         }
         LOGGER.debug("Event Geo: {}",
                      eventRecord.getFieldByName(GDELTEventConstants.ActionGeoLocation).getValue().toString());

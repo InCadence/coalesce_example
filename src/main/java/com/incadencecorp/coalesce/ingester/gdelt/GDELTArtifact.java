@@ -102,7 +102,7 @@ public class GDELTArtifact extends CoalesceEntity {
         CoalesceRecordset artifactRecordSet = this.getCoalesceRecordsetForNamePath(GDELTArtifactConstants.Name,
                                                                                    GDELTArtifactConstants.GDELTArtifactSection,
                                                                                    GDELTArtifactConstants.GDELTArtifactRecordset);
-        return (GDELTArtifactRecord) artifactRecordSet.getItem(record);
+        return new GDELTArtifactRecord(artifactRecordSet.getItem(record));
 
     }
 

@@ -292,9 +292,8 @@ public class GDELTRecord extends CoalesceRecord {
         CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoADM1Code, ECoalesceFieldDataTypes.STRING_TYPE);
         CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoADM2Code, ECoalesceFieldDataTypes.STRING_TYPE);
         CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.ActionGeoFeatureID, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DateAdded, ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DateAdded, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
         CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.SourceURL, ECoalesceFieldDataTypes.STRING_TYPE);
-        CoalesceFieldDefinition.create(recordSet, GDELTEventConstants.DateTime, ECoalesceFieldDataTypes.DATE_TIME_TYPE);
 
         CoalesceFieldDefinition.create(recordSet,
                                        GDELTEventConstants.ActionGeoLocation,

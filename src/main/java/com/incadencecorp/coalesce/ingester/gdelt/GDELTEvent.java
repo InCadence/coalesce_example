@@ -99,7 +99,7 @@ public class GDELTEvent extends CoalesceEntity {
         CoalesceRecordset eventRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEventConstants.Name,
                                                                                 GDELTEventConstants.EventSection,
                                                                                 GDELTEventConstants.EventRecordset);
-        return (GDELTEventRecord) eventRecordSet.getItem(record);
+        return new GDELTEventRecord( eventRecordSet.getItem(record));
 
     }
 
