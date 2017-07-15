@@ -54,19 +54,19 @@ public class GDELTArtifact extends CoalesceEntity {
 
         CoalesceLinkageSection.create(this);
 
-        CoalesceSection agentSection = CoalesceSection.create(this, GDELTArtifactConstants.ArtifactSection);
-        CoalesceRecordset agentRecordSet = GDELTArtifactRecord.createRecordset(agentSection, GDELTArtifactConstants.ArtifactRecordset);
+        CoalesceSection agentSection = CoalesceSection.create(this, GDELTArtifactConstants.GDELTArtifactSection);
+        CoalesceRecordset agentRecordSet = GDELTArtifactRecord.createRecordset(agentSection, GDELTArtifactConstants.GDELTArtifactRecordset);
 
         agentRecordSet.addNew();
     	
     	return true;
     }
 	public  static String getRecordSetName() {
-		return GDELTArtifactConstants.ArtifactRecordset;
+		return GDELTArtifactConstants.GDELTArtifactRecordset;
 	}
 
 	public static  String getQueryName() {
-		return GDELTArtifactConstants.ArtifactRecordset;
+		return GDELTArtifactConstants.GDELTArtifactRecordset;
 	}
 	public GDELTArtifactRecord getRecord() {
 		return getRecord(0);
@@ -74,7 +74,7 @@ public class GDELTArtifact extends CoalesceEntity {
 	
 	public GDELTArtifactRecord getRecord(int record) {
 	    CoalesceRecordset artifactRecordSet = this.getCoalesceRecordsetForNamePath(GDELTArtifactConstants.Name + File.separator
-	            + GDELTArtifactConstants.ArtifactSection + File.separator + GDELTEventConstants.EventRecordset);
+	            + GDELTArtifactConstants.GDELTArtifactSection + File.separator + GDELTEventConstants.EventRecordset);
 	    return  (GDELTArtifactRecord) artifactRecordSet.getItem(record);
 	    
 	}
