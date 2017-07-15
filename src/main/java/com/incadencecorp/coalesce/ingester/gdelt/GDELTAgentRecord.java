@@ -366,7 +366,7 @@ public class GDELTAgentRecord extends GDELTRecord {
 
     }
 
-	public Coordinate getGeoLocation() {
+	public Coordinate getAgentGeoLocation() {
 		try {
 			return ((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).getValue();
 		} catch (CoalesceDataFormatException e) {
@@ -375,7 +375,7 @@ public class GDELTAgentRecord extends GDELTRecord {
 		}
 	}
 
-	public void setGeoLocation(Coordinate actionGeoLocation) {
+	public void setAgentGeoLocation(Coordinate actionGeoLocation) {
 		try {
 			((CoalesceCoordinateField) this.getFieldByName(GDELTAgentConstants.AgentGeoLocation)).setValue(actionGeoLocation);
 		} catch (CoalesceDataFormatException e) {
