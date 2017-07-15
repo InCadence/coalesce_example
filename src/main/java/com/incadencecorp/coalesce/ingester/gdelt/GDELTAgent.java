@@ -1,5 +1,6 @@
 package com.incadencecorp.coalesce.ingester.gdelt;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.xml.sax.SAXException;
@@ -72,4 +73,16 @@ public class GDELTAgent extends CoalesceEntity {
 	public static  String getQueryName() {
 		return GDELTAgentConstants.AgentRecordset;
 	}
+	
+
+    public GDELTAgentRecord getRecord() {
+        return getRecord(0);
+    }
+    
+    public GDELTAgentRecord getRecord(int record) {
+        CoalesceRecordset agentRecordSet = this.getCoalesceRecordsetForNamePath(GDELTEntityConstants.GDELTEntity + File.separator
+                + GDELTAgentConstants.AgentSection + File.separator + GDELTAgentConstants.AgentRecordset);
+        return  (GDELTAgentRecord) agentRecordSet.getItem(record);
+        
+    }
 }
