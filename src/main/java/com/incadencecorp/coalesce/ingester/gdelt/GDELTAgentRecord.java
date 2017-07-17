@@ -18,9 +18,9 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
-public class GDELTAgentRecord extends GDELTRecord {
+public class GDELTAgentRecord extends CoalesceRecord {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GDELTRecord.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GDELTAgentRecord.class);
 
     private static GeometryFactory factory = new GeometryFactory();
 
@@ -405,73 +405,24 @@ public class GDELTAgentRecord extends GDELTRecord {
     public static CoalesceRecordset createRecordset(CoalesceSection section, String pathName)
     {
         CoalesceRecordset recordSet = CoalesceRecordset.create(section, pathName);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE, false);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.NameMetaphone,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentCountryCode,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       false);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentKnownGroupCode,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentEthnicCode,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentReligion1Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentReligion2Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentType1Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentType2Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentType3Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoType,
-                                       ECoalesceFieldDataTypes.INTEGER_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoFullname,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoCountryCode,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoADM1Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoADM2Code,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoFeatureID,
-                                       ECoalesceFieldDataTypes.STRING_TYPE,
-                                       true);
-
-        CoalesceFieldDefinition.create(recordSet,
-                                       GDELTAgentConstants.AgentGeoLocation,
-                                       ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentCode, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.AgentName, ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet, GDELTAgentConstants.NameMetaphone,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentCountryCode,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentKnownGroupCode,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentEthnicCode,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentReligion1Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentReligion2Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentType1Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentType2Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentType3Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoType,ECoalesceFieldDataTypes.INTEGER_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoFullname,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoCountryCode,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoADM1Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoADM2Code,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoFeatureID,ECoalesceFieldDataTypes.STRING_TYPE);
+        CoalesceFieldDefinition.create(recordSet,GDELTAgentConstants.AgentGeoLocation,ECoalesceFieldDataTypes.GEOCOORDINATE_TYPE);
 
         return recordSet;
     }
