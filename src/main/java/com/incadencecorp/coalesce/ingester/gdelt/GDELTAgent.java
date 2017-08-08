@@ -41,6 +41,10 @@ public class GDELTAgent extends CoalesceEntity {
     @Override
     public boolean initialize()
     {
+        if (this.isInitialized())
+        {
+            return true;
+        }
         if (!initializeEntity(GDELTAgentConstants.Name,
                               GDELTAgentConstants.Source,
                               GDELTAgentConstants.Version,

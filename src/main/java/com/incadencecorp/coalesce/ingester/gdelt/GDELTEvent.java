@@ -41,6 +41,10 @@ public class GDELTEvent extends CoalesceEntity {
     @Override
     public boolean initialize()
     {
+        if (this.isInitialized())
+        {
+            return true;
+        }
         if (!initializeEntity(GDELTEventConstants.Name,
                               GDELTEventConstants.Source,
                               GDELTEventConstants.Version,

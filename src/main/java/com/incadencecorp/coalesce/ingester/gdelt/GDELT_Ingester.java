@@ -143,11 +143,7 @@ public class GDELT_Ingester {
     private GDELTArtifact createArtifactEntity(String sourceFile, String gdeltLine, String[] fields)
     {
         GDELTArtifact artifact = new GDELTArtifact();
-        // Make sure we don't double-initialize the artifact
-        if (!artifact.initialize())
-        {
-            artifact.initialize();
-        }
+        
         GDELTArtifactRecord artifactRecord = artifact.getRecord();
 
 
@@ -210,10 +206,7 @@ public class GDELT_Ingester {
         {
             LOGGER.info("Collapesed Agent");
             GDELTAgent entity = (GDELTAgent) CoalesceObjectFactory.createAndLoad(CoalesceConnection.getFramework().getCoalesceEntity(results.getString(AccumuloPersistor.ENTITY_KEY_COLUMN_NAME)));
-            if (!entity.isInitialized())
-            {
-                entity.initialize();
-            }
+
             if (!results.isLast())
             {
                 LOGGER.warn("Multiple Agents for {} / {} / {} / {}", name, code, countrycode, fullname);
@@ -273,11 +266,7 @@ public class GDELT_Ingester {
         if (agent != null) return agent;
 
         agent = new GDELTAgent();
-        // Don't initialize it if it's already initialized
-        if (!agent.isInitialized())
-        {
-            agent.initialize();
-        }
+
         GDELTAgentRecord agentRecord = agent.getRecord();
         if (which == 1)
         {
@@ -371,10 +360,6 @@ public class GDELT_Ingester {
 
         // Event section
         GDELTEvent event = new GDELTEvent();
-        if (!event.isInitialized())
-        {
-            event.initialize();
-        }
 
         GDELTEventRecord eventRecord = event.getRecord();
 

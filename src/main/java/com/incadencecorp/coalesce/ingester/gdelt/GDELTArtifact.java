@@ -44,6 +44,10 @@ public class GDELTArtifact extends CoalesceEntity {
     @Override
     public boolean initialize()
     {
+        if (this.isInitialized())
+        {
+            return true;
+        }
         if (!initializeEntity(GDELTArtifactConstants.Name,
                               GDELTArtifactConstants.Source,
                               GDELTArtifactConstants.Version,
