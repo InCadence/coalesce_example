@@ -35,7 +35,7 @@ public class GDELTEvent extends CoalesceEntity {
 
     public GDELTEvent()
     {
-
+        initialize();
     }
 
     @Override
